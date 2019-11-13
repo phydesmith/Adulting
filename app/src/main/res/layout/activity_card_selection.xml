@@ -41,7 +41,7 @@
     <ImageView
         android:id="@+id/valueRelationships"
         android:layout_width="78dp"
-        android:layout_height="54dp"
+        android:layout_height="55dp"
         android:layout_marginStart="40dp"
         android:layout_marginLeft="40dp"
         android:layout_marginBottom="12dp"
@@ -52,8 +52,8 @@
 
     <ImageView
         android:id="@+id/valueEducation"
-        android:layout_width="78sp"
-        android:layout_height="55sp"
+        android:layout_width="78dp"
+        android:layout_height="55dp"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginBottom="12dp"
@@ -64,8 +64,8 @@
 
     <ImageView
         android:id="@+id/valueHealth"
-        android:layout_width="78sp"
-        android:layout_height="55sp"
+        android:layout_width="78dp"
+        android:layout_height="55dp"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginBottom="12dp"
@@ -76,8 +76,8 @@
 
     <ImageView
         android:id="@+id/valueWealth"
-        android:layout_width="78sp"
-        android:layout_height="55sp"
+        android:layout_width="78dp"
+        android:layout_height="55dp"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginBottom="12dp"
@@ -99,6 +99,28 @@
         app:layout_constraintTop_toTopOf="@+id/fullscreen_content"
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/bottom_bar" />
+
+    <Button
+        android:id="@+id/testAddR"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginTop="16dp"
+        android:text="+10 Relationships"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/testSubtractR"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginTop="52dp"
+        android:text="-10 Relationships"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/testAddR" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

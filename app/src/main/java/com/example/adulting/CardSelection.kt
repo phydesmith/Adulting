@@ -3,8 +3,15 @@ package com.example.adulting
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.util.DisplayMetrics
+import android.util.Log
 import android.view.View
+import android.widget.ImageView
+import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_card_selection.*
+import java.security.AccessController.getContext
+import kotlin.math.roundToInt
+
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -60,6 +67,15 @@ class CardSelection : AppCompatActivity() {
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
         //TODO (removed) dummy_button.setOnTouchListener(mDelayHideTouchListener)
+
+        testAddR.setOnClickListener(View.OnClickListener {
+            Log.i("Preston", "Plus 10")
+            updateCatValues(10, 'R')
+        })
+        testSubtractR.setOnClickListener(View.OnClickListener {
+            Log.i("Preston", "Minus 10")
+            updateCatValues(-10, 'R')
+        })
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -69,6 +85,34 @@ class CardSelection : AppCompatActivity() {
         // created, to briefly hint to the user that UI controls
         // are available.
         delayedHide(100)
+    }
+
+    fun updateCatValues(updateValue: Int, catToUpdate: Char) {
+        lateinit var valueToUpdate : ImageView
+        if (catToUpdate == 'R')
+            valueToUpdate = valueRelationships
+        else if (catToUpdate == 'E')
+            valueToUpdate = valueEducation
+        else if (catToUpdate == 'H')
+            valueToUpdate = valueHealth
+        else if (catToUpdate == 'W')
+            valueToUpdate = valueWealth
+
+        var oldHeight = pxToDp(valueToUpdate.layoutParams.height) + updateValue
+
+        Log.i("Preston", "Math Starts Here: $oldHeight")
+        when {
+            oldHeight in 0..55 -> valueToUpdate.layoutParams.height = dpToPx(oldHeight)
+            oldHeight > 55 -> valueToUpdate.layoutParams.height = dpToPx(55)
+            else -> valueToUpdate.layoutParams.height = 0
+        }
+        if (oldHeight > 15) {
+            valueToUpdate.setBackgroundColor(ContextCompat.getColor(this, R.color.darkBlue))
+        } else {
+            valueToUpdate.setBackgroundColor(ContextCompat.getColor(this, R.color.orange))
+        }
+        
+        valueToUpdate.requestLayout()
     }
 
     private fun toggle() {
@@ -129,5 +173,13 @@ class CardSelection : AppCompatActivity() {
          * and a change of the status and navigation bar.
          */
         private val UI_ANIMATION_DELAY = 300
+    }
+
+    private fun pxToDp(px: Int): Int {
+        return (px / (resources.displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT)).roundToInt()
+    }
+
+    private fun dpToPx(dp: Int): Int {
+        return (dp * (resources.displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT)).roundToInt()
     }
 }
