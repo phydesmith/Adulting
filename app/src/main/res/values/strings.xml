@@ -6,4 +6,7 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="blue_bar" />
     <string name="bottom_color_value" />
+    <string name="card_title">Card Title</string>
+    <string name="choice_card" />
+    <string name="card_icon" />
 </resources>

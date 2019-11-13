@@ -56,7 +56,7 @@
         android:layout_height="55dp"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="10dp"
         android:background="#2F5597"
         android:contentDescription="@string/bottom_color_value"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -68,7 +68,7 @@
         android:layout_height="55dp"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="11dp"
         android:background="#2F5597"
         android:contentDescription="@string/bottom_color_value"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -80,7 +80,7 @@
         android:layout_height="55dp"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="10dp"
         android:background="#2F5597"
         android:contentDescription="@string/bottom_color_value"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -117,10 +117,134 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
         android:layout_marginLeft="28dp"
-        android:layout_marginTop="52dp"
         android:text="-10 Relationships"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/testAddR" />
+
+    <ImageView
+        android:id="@+id/backCard"
+        android:layout_width="220dp"
+        android:layout_height="220dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginBottom="50dp"
+        android:contentDescription="@string/choice_card"
+        app:layout_constraintBottom_toBottomOf="@+id/middleCard"
+        app:layout_constraintEnd_toEndOf="@+id/middleCard"
+        app:srcCompat="@drawable/square_card" />
+
+    <ImageView
+        android:id="@+id/middleCard"
+        android:layout_width="220dp"
+        android:layout_height="220dp"
+        app:layout_constraintBottom_toBottomOf="@+id/bottomBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/square_card"
+        android:contentDescription="@string/choice_card"/>
+
+    <ImageView
+        android:id="@+id/frontCard"
+        android:layout_width="220dp"
+        android:layout_height="220dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="50dp"
+        android:contentDescription="@string/choice_card"
+        app:layout_constraintStart_toStartOf="@+id/middleCard"
+        app:layout_constraintTop_toTopOf="@+id/middleCard"
+        app:srcCompat="@drawable/square_card" />
+
+    <ImageView
+        android:id="@+id/backCardIcon"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="12dp"
+        android:contentDescription="@string/card_icon"
+        app:layout_constraintStart_toStartOf="@+id/backCard"
+        app:layout_constraintTop_toTopOf="@+id/backCard"
+        app:srcCompat="@drawable/icon_education" />
+
+    <ImageView
+        android:id="@+id/middleCardIcon"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintStart_toStartOf="@+id/middleCard"
+        app:layout_constraintTop_toTopOf="@+id/middleCard"
+        app:srcCompat="@drawable/icon_education"
+        android:contentDescription="@string/card_icon"/>
+
+    <ImageView
+        android:id="@+id/frontCardIcon"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="12dp"
+        android:contentDescription="@string/card_icon"
+        app:layout_constraintStart_toStartOf="@+id/frontCard"
+        app:layout_constraintTop_toTopOf="@+id/frontCard"
+        app:srcCompat="@drawable/icon_education" />
+
+    <TextView
+        android:id="@+id/backCardTitle"
+        android:layout_width="142dp"
+        android:layout_height="29dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:contentDescription="@string/card_title"
+        android:gravity="end"
+        android:text="@string/card_title"
+        android:textAlignment="textEnd"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="#000000"
+        android:textIsSelectable="false"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/backCard"
+        app:layout_constraintTop_toTopOf="@+id/backCard" />
+
+    <TextView
+        android:id="@+id/middleCardTitle"
+        android:layout_width="142dp"
+        android:layout_height="29dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="end"
+        android:text="@string/card_title"
+        android:textAlignment="textEnd"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="#000000"
+        android:textIsSelectable="false"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/middleCard"
+        app:layout_constraintTop_toTopOf="@+id/middleCard"
+        android:contentDescription="@string/card_title"/>
+
+    <TextView
+        android:id="@+id/frontCardTotal"
+        android:layout_width="142dp"
+        android:layout_height="29dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:contentDescription="@string/card_title"
+        android:gravity="end"
+        android:text="@string/card_title"
+        android:textAlignment="textEnd"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="#000000"
+        android:textIsSelectable="false"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/frontCard"
+        app:layout_constraintTop_toTopOf="@+id/frontCard" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

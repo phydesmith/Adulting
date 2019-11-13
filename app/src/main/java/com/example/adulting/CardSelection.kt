@@ -111,7 +111,7 @@ class CardSelection : AppCompatActivity() {
         } else {
             valueToUpdate.setBackgroundColor(ContextCompat.getColor(this, R.color.orange))
         }
-        
+
         valueToUpdate.requestLayout()
     }
 
