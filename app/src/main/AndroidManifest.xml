@@ -10,10 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".ChoiceScreen"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_choice_screen"
+            android:theme="@style/FullscreenTheme"></activity>
+        <activity
             android:name=".CardSelection"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_card_selection"
-            android:theme="@style/FullscreenTheme"></activity>
+            android:theme="@style/FullscreenTheme" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

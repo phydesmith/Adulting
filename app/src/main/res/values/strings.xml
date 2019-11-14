@@ -9,4 +9,6 @@
     <string name="card_title">Card Title</string>
     <string name="choice_card" />
     <string name="card_icon" />
+
+    <string name="title_activity_choice_screen">ChoiceScreen</string>
 </resources>

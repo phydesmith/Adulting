@@ -1,6 +1,5 @@
 package com.example.adulting
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -9,7 +8,7 @@ import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
-import kotlinx.android.synthetic.main.activity_card_selection.*
+import kotlinx.android.synthetic.main.activity_choice_screen.*
 import java.security.AccessController.getContext
 import kotlin.math.roundToInt
 
@@ -18,7 +17,7 @@ import kotlin.math.roundToInt
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-class CardSelection : AppCompatActivity() {
+class ChoiceScreen : AppCompatActivity() {
     private val mHideHandler = Handler()
     private val mHidePart2Runnable = Runnable {
         // Delayed removal of status and navigation bar
@@ -46,40 +45,20 @@ class CardSelection : AppCompatActivity() {
      * system UI. This is to prevent the jarring behavior of controls going away
      * while interacting with activity UI.
      */
+    private val mDelayHideTouchListener = View.OnTouchListener { _, _ ->
+        if (AUTO_HIDE) {
+            delayedHide(AUTO_HIDE_DELAY_MILLIS)
+        }
+        false
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_card_selection)
+        setContentView(R.layout.activity_choice_screen)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         mVisible = true
-
-
-        testAddR.setOnClickListener(View.OnClickListener {
-            Log.i("Test Button", "Plus 10")
-            updateCatValues(10, 'R')
-        })
-        testSubtractR.setOnClickListener(View.OnClickListener {
-            Log.i("Test Button", "Minus 10")
-            updateCatValues(-10, 'R')
-        })
-
-        frontCard.setOnClickListener(View.OnClickListener {
-            val myIntent = Intent(this, ChoiceScreen::class.java)
-            startActivityForResult(myIntent, 1234)
-            delayedHide(0)
-        })
-        middleCard.setOnClickListener(View.OnClickListener {
-            val myIntent = Intent(this, ChoiceScreen::class.java)
-            startActivityForResult(myIntent, 1234)
-            delayedHide(0)
-        })
-        backCard.setOnClickListener(View.OnClickListener {
-            val myIntent = Intent(this, ChoiceScreen::class.java)
-            startActivityForResult(myIntent, 1234)
-            delayedHide(0)
-        })
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -88,7 +67,6 @@ class CardSelection : AppCompatActivity() {
         // Trigger the initial hide() shortly after the activity has been
         // created, to briefly hint to the user that UI controls
         // are available.
-
         delayedHide(0)
     }
 
@@ -118,6 +96,13 @@ class CardSelection : AppCompatActivity() {
         valueToUpdate.requestLayout()
     }
 
+    private fun toggle() {
+        if (mVisible) {
+            hide()
+        } else {
+            show()
+        }
+    }
 
     private fun hide() {
         // Hide UI first
@@ -128,6 +113,18 @@ class CardSelection : AppCompatActivity() {
         // Schedule a runnable to remove the status and navigation bar after a delay
         mHideHandler.removeCallbacks(mShowPart2Runnable)
         mHideHandler.postDelayed(mHidePart2Runnable, UI_ANIMATION_DELAY.toLong())
+    }
+
+    private fun show() {
+        // Show the system bar
+        fullscreen_content.systemUiVisibility =
+            View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+                    View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+        mVisible = true
+
+        // Schedule a runnable to display UI elements after a delay
+        mHideHandler.removeCallbacks(mHidePart2Runnable)
+        mHideHandler.postDelayed(mShowPart2Runnable, UI_ANIMATION_DELAY.toLong())
     }
 
     /**
