@@ -20,21 +20,21 @@ class MainActivity : AppCompatActivity() {
         val db = Room.databaseBuilder(
             applicationContext,
             AppDatabase::class.java, "cards"
-        ).build()
-
+        ).allowMainThreadQueries().build() // allowMainThreadQueries() needs to be removed eventually - db needs to run on separate thread
         var relCard_Type = CardType(1, "Relationships")
         var eduCard_Type = CardType(2, "Education")
         var helCard_Type = CardType(3, "Health")
         var welCard_Type = CardType( 4, "Wealth")
-
-        var cardTypes = db.cardTypeDao().insertAll(
+        /*
+        db.cardTypeDao().insertAll(
             relCard_Type,
             eduCard_Type,
             helCard_Type,
             welCard_Type
         )
-
-        main_db_test_Text.setText(cardTypes.toString())
+        */
+        var cardTypes = db.cardTypeDao().getAll()
+        main_db_test_Text.setText(cardTypes.get(0).typeDescription.toString());
 
 
     }
