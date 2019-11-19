@@ -26,4 +26,8 @@ public class CardType {
     public void setTypeId(int typeId) {
         this.typeId = typeId;
     }
+
+    public String toString(){
+        return this.typeDescription;
+    }
 }

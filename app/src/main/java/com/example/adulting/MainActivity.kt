@@ -3,11 +3,13 @@ package com.example.adulting
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import androidx.room.Room
-import com.example.adulting.data.appdatabase.AppDatabase
-import com.example.adulting.data.entities.CardType
-import kotlinx.android.synthetic.main.activity_main.*
+import androidx.lifecycle.Observer
+import com.example.adulting.jdata.database.CardDatabase
+import com.example.adulting.jdata.entity.CardInfo
+import com.example.adulting.jdata.entity.CardType
+import com.example.adulting.jdata.repository.CardRepository
 
 class MainActivity : AppCompatActivity() {
     private val IS_DEAD = 15
@@ -37,6 +39,16 @@ class MainActivity : AppCompatActivity() {
         var cardTypes = db.cardTypeDao().getAll()
         main_db_test_Text.setText(cardTypes.get(0).typeDescription.toString());
          */
+
+        var cardType  = CardType("Relationship");
+        val repository = CardRepository(application)
+        repository.insert(cardType)
+
+        val cardTypeObserver = Observer<List<CardType>> { list ->
+            Log.println(Log.DEBUG, "get: ", list.get(0).toString() )
+        }
+
+        repository.allCardTypes.observe(this, cardTypeObserver);
 
 
     }

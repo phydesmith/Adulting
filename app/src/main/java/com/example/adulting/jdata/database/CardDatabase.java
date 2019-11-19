@@ -1,4 +1,4 @@
-package com.example.adulting.jdata;
+package com.example.adulting.jdata.database;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -56,6 +56,7 @@ public abstract class CardDatabase extends RoomDatabase {
 
         @Override
         protected  Void doInBackground(Void... voids) {
+            // On create here
             return null;
         }
 
