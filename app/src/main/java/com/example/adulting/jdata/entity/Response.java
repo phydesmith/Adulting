@@ -1,13 +1,24 @@
 package com.example.adulting.jdata.entity;
 
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity
+import static androidx.room.ForeignKey.CASCADE;
+
+@Entity (tableName = "response",
+         foreignKeys = @ForeignKey(
+                 entity = CardInfo.class,
+                 parentColumns = "cardInfoId",
+                 childColumns = "cardInfoId",
+                 onDelete = CASCADE)
+        )
 public class Response {
     @PrimaryKey(autoGenerate = true)
     private int responseId;
-    // foreign key cardInfoId
+
+    // foreign key
+    private int cardInfoId;
 
     private String response;
     private boolean checkRequired;
@@ -41,6 +52,14 @@ public class Response {
 
     public void setResponseId(int responseId) {
         this.responseId = responseId;
+    }
+
+    public int getCardInfoId() {
+        return cardInfoId;
+    }
+
+    public void setCardInfoId(int cardInfoId) {
+        this.cardInfoId = cardInfoId;
     }
 
     public String getResponse() {

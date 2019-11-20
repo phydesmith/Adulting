@@ -1,13 +1,24 @@
 package com.example.adulting.jdata.entity;
 
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity( tableName =  "card_info")
+import static androidx.room.ForeignKey.CASCADE;
+
+@Entity( tableName =  "card_info",
+         foreignKeys = @ForeignKey(
+                 entity = CardType.class,
+                 parentColumns = "typeId",
+                 childColumns = "cardTypeId",
+                 onDelete = CASCADE)
+        )
 public class CardInfo {
     @PrimaryKey(autoGenerate = true)
     private int cardInfoId;
-    // foreign key field for card type id
+
+    // foreign key
+    private int cardTypeId;
 
     private String cardName;
     private String cardDescription;
@@ -23,6 +34,14 @@ public class CardInfo {
 
     public void setCardInfoId(int cardInfoId) {
         this.cardInfoId = cardInfoId;
+    }
+
+    public int getCardTypeId() {
+        return cardTypeId;
+    }
+
+    public void setCardTypeId(int cardTypeId) {
+        this.cardTypeId = cardTypeId;
     }
 
     public String getCardName() {
