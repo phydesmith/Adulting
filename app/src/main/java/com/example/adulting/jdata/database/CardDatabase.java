@@ -9,6 +9,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.example.adulting.jdata.dao.CardDAO;
 import com.example.adulting.jdata.dao.CardInfoDAO;
 import com.example.adulting.jdata.dao.CardTypeDAO;
 import com.example.adulting.jdata.dao.ResponseDAO;
@@ -16,7 +17,7 @@ import com.example.adulting.jdata.entity.CardInfo;
 import com.example.adulting.jdata.entity.CardType;
 import com.example.adulting.jdata.entity.Response;
 
-@Database(entities = {CardType.class, CardInfo.class, Response.class}, version = 1 )
+@Database(entities = {CardType.class, CardInfo.class, Response.class}, version = 2 )
 public abstract class CardDatabase extends RoomDatabase {
 
     private static CardDatabase instance;
@@ -24,6 +25,7 @@ public abstract class CardDatabase extends RoomDatabase {
     public abstract CardTypeDAO cardTypeDAO();
     public abstract CardInfoDAO cardInfoDAO();
     public abstract ResponseDAO responseDAO();
+    public abstract CardDAO cardDAO();
 
     public static synchronized CardDatabase getInstance(Context context) {
         if (instance == null){

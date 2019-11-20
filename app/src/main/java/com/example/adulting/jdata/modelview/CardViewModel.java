@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.example.adulting.jdata.entity.Card;
 import com.example.adulting.jdata.entity.CardInfo;
 import com.example.adulting.jdata.entity.CardType;
 import com.example.adulting.jdata.entity.Response;
@@ -16,11 +17,13 @@ import java.util.List;
 public class CardViewModel extends AndroidViewModel {
     private CardRepository repository;
     private LiveData<List<CardType>> allTypes;
+    private LiveData<List<Card>> allCards;
 
     public CardViewModel(@NonNull Application application){
         super(application);
         repository = new CardRepository(application);
         allTypes = repository.getAllCardTypes();
+        allCards = repository.getCards();
     }
 
     public void insertCardType(CardType cardType){
@@ -34,7 +37,9 @@ public class CardViewModel extends AndroidViewModel {
     public void insertResponses(Response response){
         repository.insert(response);
     }
+
     public LiveData<List<CardType>> getAllTypes() {
         return allTypes;
     }
+    public LiveData<List<Card>> getCards(){return this.allCards;}
 }

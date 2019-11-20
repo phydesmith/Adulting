@@ -8,6 +8,8 @@ public class Card {
     private int cardInfoId;
     private int responseId;
 
+    private String typeDescription;
+
     private String cardName;
     private String cardDescription;
 
@@ -24,7 +26,8 @@ public class Card {
     private int healthMod;
     private int wealthMod;
 
-    public Card(String cardName,
+    public Card(String typeDescription,
+                String cardName,
                 String cardDescription,
                 String response,
                 boolean checkRequired,
@@ -37,6 +40,7 @@ public class Card {
                 int healthMod,
                 int wealthMod) {
 
+        this.typeDescription = typeDescription;
         this.cardName = cardName;
         this.cardDescription = cardDescription;
         this.response = response;
@@ -73,6 +77,14 @@ public class Card {
 
     public void setResponseId(int responseId) {
         this.responseId = responseId;
+    }
+
+    public String getTypeDescription() {
+        return typeDescription;
+    }
+
+    public void setTypeDescription(String typeDescription) {
+        this.typeDescription = typeDescription;
     }
 
     public String getCardName() {
@@ -169,5 +181,9 @@ public class Card {
 
     public void setWealthMod(int wealthMod) {
         this.wealthMod = wealthMod;
+    }
+
+    public String toString(){
+        return this.typeDescription + "|" + this.cardName + "|" + this.cardDescription + "|" + this.response;
     }
 }

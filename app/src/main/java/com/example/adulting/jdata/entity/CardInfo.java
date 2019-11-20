@@ -23,7 +23,8 @@ public class CardInfo {
     private String cardName;
     private String cardDescription;
 
-    public CardInfo(String cardName, String cardDescription) {
+    public CardInfo(int cardTypeId,String cardName, String cardDescription) {
+        this.cardTypeId = cardTypeId;
         this.cardName = cardName;
         this.cardDescription = cardDescription;
     }

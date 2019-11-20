@@ -5,10 +5,12 @@ import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
+import com.example.adulting.jdata.dao.CardDAO;
 import com.example.adulting.jdata.dao.CardInfoDAO;
 import com.example.adulting.jdata.dao.CardTypeDAO;
 import com.example.adulting.jdata.dao.ResponseDAO;
 import com.example.adulting.jdata.database.CardDatabase;
+import com.example.adulting.jdata.entity.Card;
 import com.example.adulting.jdata.entity.CardInfo;
 import com.example.adulting.jdata.entity.CardType;
 import com.example.adulting.jdata.entity.Response;
@@ -19,14 +21,18 @@ public class CardRepository {
     private CardTypeDAO cardTypeDAO;
     private CardInfoDAO cardInfoDAO;
     private ResponseDAO responseDAO;
+    private CardDAO cardDAO;
     private LiveData<List<CardType>> allCardTypes;
+    private LiveData<List<Card>> allCards;
 
     public CardRepository(Application application){
         CardDatabase database = CardDatabase.getInstance(application);
         cardTypeDAO = database.cardTypeDAO();
         cardInfoDAO = database.cardInfoDAO();
         responseDAO = database.responseDAO();
+        cardDAO = database.cardDAO();
         allCardTypes = cardTypeDAO.getAllCardTypes();
+        allCards = cardDAO.getCards();
     }
 
     public void insert(CardType cardType){
@@ -82,6 +88,7 @@ public class CardRepository {
     public LiveData<List<CardType>> getAllCardTypes(){
         return allCardTypes;
     }
+    public LiveData<List<Card>> getCards() { return allCards; }
 
 
 }

@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 
 import static androidx.room.ForeignKey.CASCADE;
 
-@Entity (tableName = "response",
+@Entity (tableName = "responses",
          foreignKeys = @ForeignKey(
                  entity = CardInfo.class,
                  parentColumns = "cardInfoId",
@@ -33,7 +33,8 @@ public class Response {
     private int healthMod;
     private int wealthMod;
 
-    public Response(String response, boolean checkRequired, int relationshipCheck, int educationCheck, int healthCheck, int wealthCheck, int relationshipMod, int educationMod, int healthMod, int wealthMod) {
+    public Response(int cardInfoId, String response, boolean checkRequired, int relationshipCheck, int educationCheck, int healthCheck, int wealthCheck, int relationshipMod, int educationMod, int healthMod, int wealthMod) {
+        this.cardInfoId = cardInfoId;
         this.response = response;
         this.checkRequired = checkRequired;
         this.relationshipCheck = relationshipCheck;

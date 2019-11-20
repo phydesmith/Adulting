@@ -7,9 +7,11 @@ import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import com.example.adulting.jdata.database.CardDatabase
+import com.example.adulting.jdata.entity.Card
 import com.example.adulting.jdata.entity.CardInfo
 import com.example.adulting.jdata.entity.CardType
 import com.example.adulting.jdata.entity.Response
+import com.example.adulting.jdata.modelview.CardViewModel
 import com.example.adulting.jdata.repository.CardRepository
 
 class MainActivity : AppCompatActivity() {
@@ -42,23 +44,23 @@ class MainActivity : AppCompatActivity() {
          */
 
         var cardType  = CardType("Relationship");
-        var cardInfo  = CardInfo("name1", "relationship");
-        var response  = Response("Relationship",
+        var cardInfo  = CardInfo(1,"name1", "relationship problem ");
+        var response  = Response(1,"Relationship response",
             false,
             0, 0, 0, 0,
             10, 0, 0, 0);
-        val repository = CardRepository(application)
-        repository.insert(cardType)
-        repository.insert(cardInfo)
-        repository.insert(response)
 
-        val all = repository.allCardTypes
+        val viewModel = CardViewModel(application);
+
 
         val cardTypeObserver = Observer<List<CardType>> { list ->
             Log.println(Log.DEBUG, "get: ", list.get(0).toString() )
         }
+        val cardObserver = Observer<List<Card>> { list ->
+            Log.println(Log.DEBUG, "CARD: ", list.get(0).toString() )
+        }
 
-        repository.allCardTypes.observe(this, cardTypeObserver);
+        viewModel.cards.observe(this, cardObserver)
 
 
     }
