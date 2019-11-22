@@ -67,32 +67,34 @@ class MainActivity : AppCompatActivity() {
 
         val cardTypeObserver = Observer<List<CardType>> { list ->
             for (i in 0..list.size-1){
-               Log.println(Log.DEBUG, "get " + i + " : ", list.get(i).toString() )
+               Log.println(Log.DEBUG, "CardType " + i + " : ", list.get(i).toString() )
             }
         }
+
         val infoObserver = Observer<List<CardInfo>> { list ->
             for (i in 0..list.size-1){
-                Log.println(Log.DEBUG, "get " + i + " : ", list.get(i).toString() )
+                Log.println(Log.DEBUG, "CardInfo " + i + " : ", list.get(i).toString() )
             }
         }
         val responseObserver = Observer<List<Response>> { list ->
             for (i in 0..list.size-1){
-                Log.println(Log.DEBUG, "get " + i + " : ", list.get(i).toString() )
+                Log.println(Log.DEBUG, "Response: " + i + " : ", list.get(i).toString() )
             }
         }
-/*
+
+
+
         val cardObserver = Observer<List<Card>> { list ->
-            //for (i in 0..list.size-1) {
-                Log.println(Log.DEBUG, "CARD: ", list.get(0).toString())
-            //}
+            for (i in 0..list.size-1) {
+                Log.println(Log.DEBUG, "CARD: ", "Entry  " + i + ": " + list.get(i).toString())
+            }
         }
 
- */
-        viewModel.allTypes.observe(this, cardTypeObserver)
-        viewModel.allInfo.observe(this, infoObserver)
-        viewModel.allResponses.observe(this, responseObserver)
 
-        //viewModel.cards.observe(this, cardObserver)
+        //viewModel.allTypes.observe(this, cardTypeObserver)
+        //viewModel.allInfo.observe(this, infoObserver)
+        //viewModel.allResponses.observe(this, responseObserver)
+        viewModel.cards.observe(this, cardObserver)
 
 
 

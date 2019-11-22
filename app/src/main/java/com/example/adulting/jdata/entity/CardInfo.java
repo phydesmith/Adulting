@@ -53,4 +53,6 @@ public class CardInfo {
         return cardDescription;
     }
 
+    public String toString(){return this.cardDescription;}
+
 }

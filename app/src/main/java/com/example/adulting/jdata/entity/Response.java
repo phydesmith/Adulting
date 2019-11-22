@@ -102,4 +102,6 @@ public class Response {
     public int getWealthMod() {
         return wealthMod;
     }
+
+    public String toString(){ return this.response;}
 }

@@ -75,7 +75,6 @@ public abstract class CardDatabase extends RoomDatabase {
             cardInfoDAO.insert(new CardInfo(2, "Community workshop", "You signed up to go to a class sponsored by a local community organization at 8:00am"));
             cardInfoDAO.insert(new CardInfo(2, "AP Classes", "You are debating on whether or not you should take a difficult AP class during high school."));
             cardInfoDAO.insert(new CardInfo(2, "Final exam", "Your grade in economics is sustainable to skip the exam, but it will leave you with a low C, hurting your GPA"));
-            cardInfoDAO.insert(new CardInfo(2, "Final exam ", "Your grade in economics is sustainable to skip the exam, but it will leave you with a low C, hurting your GPA"));
             cardInfoDAO.insert(new CardInfo(2, "Night class", "You have a night class but you are feeling extremely weak and sick. "));
             cardInfoDAO.insert(new CardInfo(2, "Which class?", "You can sign up for a class you know will easy and you won't gain much knowledge from it, or you can also sign up for a harder class where you will end up learning more. "));
             cardInfoDAO.insert(new CardInfo(2, "Choosing a college", "You can go to a smaller private school for more money and a personalized education. Or go to a bigger public univeristy where you are unsure whether you will succeed in a large lecture hall, but you also save money. "));
