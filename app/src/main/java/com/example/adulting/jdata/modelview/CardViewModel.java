@@ -18,12 +18,16 @@ public class CardViewModel extends AndroidViewModel {
     private CardRepository repository;
     private LiveData<List<CardType>> allTypes;
     private LiveData<List<Card>> allCards;
+    private LiveData<List<CardInfo>> allInfo;
+    private LiveData<List<Response>> allResponses;
 
     public CardViewModel(@NonNull Application application){
         super(application);
         repository = new CardRepository(application);
         allTypes = repository.getAllCardTypes();
         allCards = repository.getCards();
+        allInfo = repository.getAllInfo();
+        allResponses = repository.getAllResponses();
     }
 
     public void insertCardType(CardType cardType){
@@ -42,4 +46,6 @@ public class CardViewModel extends AndroidViewModel {
         return allTypes;
     }
     public LiveData<List<Card>> getCards(){return this.allCards;}
+    public LiveData<List<CardInfo>> getAllInfo() {return allInfo; }
+    public LiveData<List<Response>> getAllResponses() {return allResponses; }
 }

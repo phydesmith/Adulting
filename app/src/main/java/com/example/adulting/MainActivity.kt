@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         var cardTypes = db.cardTypeDao().getAll()
         main_db_test_Text.setText(cardTypes.get(0).typeDescription.toString());
          */
-
+/*
         var cardType  = CardType("Relationship");
         var cardInfo  = CardInfo(1,"name1", "relationship problem ");
         var response  = Response(1,"Relationship response",
@@ -50,17 +50,51 @@ class MainActivity : AppCompatActivity() {
             0, 0, 0, 0,
             10, 0, 0, 0);
 
-        val viewModel = CardViewModel(application);
 
 
-        val cardTypeObserver = Observer<List<CardType>> { list ->
-            Log.println(Log.DEBUG, "get: ", list.get(0).toString() )
-        }
+
+        viewModel.insertCardType(cardType);
+        viewModel.insertCardInfo(cardInfo);
+        viewModel.insertResponses(response)
+
         val cardObserver = Observer<List<Card>> { list ->
             Log.println(Log.DEBUG, "CARD: ", list.get(0).toString() )
         }
 
-        viewModel.cards.observe(this, cardObserver)
+
+*/
+        val viewModel = CardViewModel(application);
+
+        val cardTypeObserver = Observer<List<CardType>> { list ->
+            for (i in 0..list.size-1){
+               Log.println(Log.DEBUG, "get " + i + " : ", list.get(i).toString() )
+            }
+        }
+        val infoObserver = Observer<List<CardInfo>> { list ->
+            for (i in 0..list.size-1){
+                Log.println(Log.DEBUG, "get " + i + " : ", list.get(i).toString() )
+            }
+        }
+        val responseObserver = Observer<List<Response>> { list ->
+            for (i in 0..list.size-1){
+                Log.println(Log.DEBUG, "get " + i + " : ", list.get(i).toString() )
+            }
+        }
+/*
+        val cardObserver = Observer<List<Card>> { list ->
+            //for (i in 0..list.size-1) {
+                Log.println(Log.DEBUG, "CARD: ", list.get(0).toString())
+            //}
+        }
+
+ */
+        viewModel.allTypes.observe(this, cardTypeObserver)
+        viewModel.allInfo.observe(this, infoObserver)
+        viewModel.allResponses.observe(this, responseObserver)
+
+        //viewModel.cards.observe(this, cardObserver)
+
+
 
 
     }

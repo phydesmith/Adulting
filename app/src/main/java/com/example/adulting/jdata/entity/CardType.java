@@ -28,6 +28,6 @@ public class CardType {
     }
 
     public String toString(){
-        return this.typeDescription;
+        return this.typeDescription + ":" + this.typeId;
     }
 }
