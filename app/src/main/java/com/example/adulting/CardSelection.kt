@@ -8,10 +8,18 @@ import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import androidx.annotation.Nullable
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
+import com.example.adulting.components.Card
+import com.example.adulting.jdata.modelview.CardViewModel
 import kotlinx.android.synthetic.main.activity_card_selection.*
 import java.security.AccessController.getContext
 import kotlin.math.roundToInt
+import kotlin.random.Random
 
 
 /**
@@ -47,6 +55,10 @@ class CardSelection : AppCompatActivity() {
      * while interacting with activity UI.
      */
 
+    //  Game Vars
+    private lateinit var cardViewModel : CardViewModel
+    private val random = java.util.Random()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -54,6 +66,26 @@ class CardSelection : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         mVisible = true
+
+        // Game Logic
+        cardViewModel = ViewModelProviders.of(this).get(CardViewModel::class.java)
+        //cardViewModel = CardViewModel(application)
+        cardViewModel.cards.observeForever{}
+        Log.println(Log.DEBUG, "Yeet", cardViewModel.cards.value?.get(0).toString() );
+
+        //Log.println(Log.DEBUG, "YEET", cardViewModel.cardList.get(0).toString() )
+
+        /*
+        cardViewModel = ViewModelProviders.of(this).get(CardViewModel::class.java)
+        val observer = Observer<List<com.example.adulting.jdata.entity.Card>> { list ->
+            var type = random.nextInt(4)
+            val relationship =
+
+
+        }
+        cardViewModel.cards.observe(this, observer)
+        */
+
 
 
         testAddR.setOnClickListener(View.OnClickListener {
@@ -80,6 +112,8 @@ class CardSelection : AppCompatActivity() {
             startActivityForResult(myIntent, 1234)
             delayedHide(0)
         })
+
+
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {

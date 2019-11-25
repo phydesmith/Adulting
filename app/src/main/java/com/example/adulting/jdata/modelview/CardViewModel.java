@@ -16,16 +16,32 @@ import java.util.List;
 
 public class CardViewModel extends AndroidViewModel {
     private CardRepository repository;
-    private LiveData<List<CardType>> allTypes;
+
+    private List<Card> cardList;
+
     private LiveData<List<Card>> allCards;
+    private LiveData<List<Card>> relationshipCards;
+    private LiveData<List<Card>> educationCards;
+    private LiveData<List<Card>> healthCards;
+    private LiveData<List<Card>> wealthCards;
+
+    private LiveData<List<CardType>> allTypes;
     private LiveData<List<CardInfo>> allInfo;
     private LiveData<List<Response>> allResponses;
 
     public CardViewModel(@NonNull Application application){
         super(application);
         repository = new CardRepository(application);
-        allTypes = repository.getAllCardTypes();
+
+        cardList = repository.getCardList();
+
         allCards = repository.getCards();
+        relationshipCards = repository.getRelationshipCards();
+        educationCards = repository.getEducationCards();
+        healthCards = repository.getHealthCards();
+        wealthCards = repository.getWealthCards();
+
+        allTypes = repository.getAllCardTypes();
         allInfo = repository.getAllInfo();
         allResponses = repository.getAllResponses();
     }
@@ -42,10 +58,19 @@ public class CardViewModel extends AndroidViewModel {
         repository.insert(response);
     }
 
+    public List<Card> getCardList() {
+        return cardList;
+    }
+
+    public LiveData<List<Card>> getCards(){return this.allCards;}
+    public LiveData<List<Card>> getRelationshipCards() {return this.relationshipCards; }
+    public LiveData<List<Card>> getEducationCards() {return this.educationCards; }
+    public LiveData<List<Card>> getHealthCards() {return this.healthCards; }
+    public LiveData<List<Card>> getWealthCards() {return this.wealthCards; }
+
     public LiveData<List<CardType>> getAllTypes() {
         return allTypes;
     }
-    public LiveData<List<Card>> getCards(){return this.allCards;}
     public LiveData<List<CardInfo>> getAllInfo() {return allInfo; }
     public LiveData<List<Response>> getAllResponses() {return allResponses; }
 }
