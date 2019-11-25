@@ -21,22 +21,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // View Model Testing
-        val viewModel = CardViewModel(application);
-        //Log.println(Log.DEBUG, "CARD: ", "Entry  " + i + ": " + viewModel.cards.value.get(0))
-
-        val cardObserver = Observer<List<Card>> { list ->
-            for (i in 0..list.size-1) {
-                Log.println(Log.DEBUG, "CARD: ", "Entry  " + i + ": " + list.get(i).toString())
-            }
-        }
-
-        //viewModel.cards.observe(this, cardObserver)
-        //Log.println(Log.DEBUG, "TEST", viewModel.cards.value.toString())
-        viewModel.relationshipCards.observeForever( cardObserver)
-
-
-
     }
 
     fun startGame(view: View) {

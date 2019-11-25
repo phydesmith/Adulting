@@ -49,13 +49,11 @@ public interface CardDAO {
                     + "WHERE card_types.typeID = 4"
     )
     LiveData<List<Card>> getWealthCards();
-/*
+
     @Query(
             "SELECT * FROM card_types "
                     + "INNER JOIN card_info ON card_info.cardTypeId = card_types.typeId "
-                    + "INNER JOIN responses ON responses.cardInfoId = card_info.cardInfoId"
+                    + "INNER JOIN responses ON responses.cardInfoId = card_info.cardInfoId WHERE card_types.typeId = :type"
     )
-    List<Card> getCardList();
-
- */
+    LiveData<List<Card>> getCardsByType(int type);
 }

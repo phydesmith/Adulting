@@ -109,6 +109,9 @@ public class CardRepository {
     public List<Card> getCardList() { return cardList; }
 
     public LiveData<List<Card>> getCards() { return allCards; }
+
+    public LiveData<List<Card>> getCardsByType(int type) {return cardDAO.getCardsByType(type); };
+
     public LiveData<List<Card>> getRelationshipCards() { return relationshipCards; }
     public LiveData<List<Card>> getEducationCards() { return educationCards; }
     public LiveData<List<Card>> getHealthCards() { return  healthCards; }

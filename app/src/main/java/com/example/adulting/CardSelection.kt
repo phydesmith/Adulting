@@ -14,7 +14,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import com.example.adulting.components.Card
+import com.example.adulting.jdata.entity.Card
 import com.example.adulting.jdata.modelview.CardViewModel
 import kotlinx.android.synthetic.main.activity_card_selection.*
 import java.security.AccessController.getContext
@@ -68,24 +68,23 @@ class CardSelection : AppCompatActivity() {
         mVisible = true
 
         // Game Logic
-        cardViewModel = ViewModelProviders.of(this).get(CardViewModel::class.java)
-        //cardViewModel = CardViewModel(application)
-        cardViewModel.cards.observeForever{}
-        Log.println(Log.DEBUG, "Yeet", cardViewModel.cards.value?.get(0).toString() );
+        val randomTypes = getTypes();
+        val cards = IntArray(3) {0}
 
-        //Log.println(Log.DEBUG, "YEET", cardViewModel.cardList.get(0).toString() )
-
-        /*
-        cardViewModel = ViewModelProviders.of(this).get(CardViewModel::class.java)
-        val observer = Observer<List<com.example.adulting.jdata.entity.Card>> { list ->
-            var type = random.nextInt(4)
-            val relationship =
-
-
+        for ( i in 0 until 3) {
+            cardViewModel = ViewModelProviders.of(this).get(CardViewModel::class.java) // from tutorial
+            val observer = Observer<List<Card>> { list ->
+                cards[i] = random.nextInt(list.size)
+                if (i == 0) {
+                    backCardTitle.text = list.get(cards[i]).cardName
+                } else if (i == 1) {
+                    middleCardTitle.text = list.get(cards[i]).cardName
+                } else {
+                    frontCardTitle.text = list.get(cards[i]).cardName
+                }
+            }
+            cardViewModel.getCardsByType(randomTypes[i]).observe(this, observer)
         }
-        cardViewModel.cards.observe(this, observer)
-        */
-
 
 
         testAddR.setOnClickListener(View.OnClickListener {
@@ -97,24 +96,43 @@ class CardSelection : AppCompatActivity() {
             updateCatValues(-10, 'R')
         })
 
-        frontCard.setOnClickListener(View.OnClickListener {
+
+        backCard.setOnClickListener(View.OnClickListener {
             val myIntent = Intent(this, ChoiceScreen::class.java)
+            myIntent.putExtra("type", randomTypes[0])
+            myIntent.putExtra("card", cards[0])
             startActivityForResult(myIntent, 1234)
             delayedHide(0)
         })
         middleCard.setOnClickListener(View.OnClickListener {
             val myIntent = Intent(this, ChoiceScreen::class.java)
+            myIntent.putExtra("type", randomTypes[1])
+            myIntent.putExtra("card", cards[1])
             startActivityForResult(myIntent, 1234)
             delayedHide(0)
         })
-        backCard.setOnClickListener(View.OnClickListener {
+        frontCard.setOnClickListener(View.OnClickListener {
             val myIntent = Intent(this, ChoiceScreen::class.java)
+            myIntent.putExtra("type", randomTypes[2])
+            myIntent.putExtra("card", cards[2])
             startActivityForResult(myIntent, 1234)
             delayedHide(0)
         })
+
 
 
     }
+
+    // game functions
+    private fun getTypes() : IntArray{
+        val types = IntArray(3){0}
+        for ( i in 0 until 3 ){
+            types[i] = (random.nextInt(4)+1)
+        }
+        return types
+    }
+
+
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
