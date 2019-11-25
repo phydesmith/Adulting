@@ -96,7 +96,6 @@ class CardSelection : AppCompatActivity() {
             updateCatValues(-10, 'R')
         })
 
-
         backCard.setOnClickListener(View.OnClickListener {
             val myIntent = Intent(this, ChoiceScreen::class.java)
             myIntent.putExtra("type", randomTypes[0])

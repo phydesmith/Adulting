@@ -64,7 +64,9 @@ public class CardViewModel extends AndroidViewModel {
 
     public LiveData<List<Card>> getCards(){return this.allCards;}
 
-    public LiveData<List<Card>> getCardsByType(int type) {return repository.getCardsByType(type); };
+    public LiveData<List<Card>> getCardsByType(int type) {return repository.getCardsByType(type); }
+    public LiveData<List<Card>> getCardByInfoId(int cardInfoId) {return repository.getCardByInfoId(cardInfoId); }
+    public LiveData<List<Card>> getCardByTypeAndId(int type, int cardInfoId) {return repository.getCardByTypeAndId(type, cardInfoId);}
 
     public LiveData<List<Card>> getRelationshipCards() {return this.relationshipCards; }
     public LiveData<List<Card>> getEducationCards() {return this.educationCards; }

@@ -56,4 +56,18 @@ public interface CardDAO {
                     + "INNER JOIN responses ON responses.cardInfoId = card_info.cardInfoId WHERE card_types.typeId = :type"
     )
     LiveData<List<Card>> getCardsByType(int type);
+
+    @Query(
+            "SELECT * FROM card_types "
+                    + "INNER JOIN card_info ON card_info.cardTypeId = card_types.typeId "
+                    + "INNER JOIN responses ON responses.cardInfoId = card_info.cardInfoId WHERE card_info.cardInfoId = :cardInfoId"
+    )
+    LiveData<List<Card>> getCardByInfoId(int cardInfoId);
+
+    @Query(
+            "SELECT * FROM card_types "
+                    + "INNER JOIN card_info ON card_info.cardTypeId = card_types.typeId "
+                    + "INNER JOIN responses ON responses.cardInfoId = card_info.cardInfoId WHERE card_types.typeId = :type AND card_info.cardInfoId = :cardInfoId "
+    )
+    LiveData<List<Card>> getCardByTypeAndId(int type, int cardInfoId);
 }
