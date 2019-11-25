@@ -20,7 +20,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         /*
         // DATABASE TESTING
         // KOTLIN
@@ -63,14 +62,14 @@ class MainActivity : AppCompatActivity() {
 
 
 */
-        val viewModel = CardViewModel(application);
 
+        //  ViewModel Testing with Android Room/LiveData Architecture
+        val viewModel = CardViewModel(application);
         val cardTypeObserver = Observer<List<CardType>> { list ->
             for (i in 0..list.size-1){
                Log.println(Log.DEBUG, "CardType " + i + " : ", list.get(i).toString() )
             }
         }
-
         val infoObserver = Observer<List<CardInfo>> { list ->
             for (i in 0..list.size-1){
                 Log.println(Log.DEBUG, "CardInfo " + i + " : ", list.get(i).toString() )
@@ -81,24 +80,15 @@ class MainActivity : AppCompatActivity() {
                 Log.println(Log.DEBUG, "Response: " + i + " : ", list.get(i).toString() )
             }
         }
-
-
-
         val cardObserver = Observer<List<Card>> { list ->
             for (i in 0..list.size-1) {
                 Log.println(Log.DEBUG, "CARD: ", "Entry  " + i + ": " + list.get(i).toString())
             }
         }
-
-
         //viewModel.allTypes.observe(this, cardTypeObserver)
         //viewModel.allInfo.observe(this, infoObserver)
         //viewModel.allResponses.observe(this, responseObserver)
         viewModel.cards.observe(this, cardObserver)
-
-
-
-
     }
 
     fun startGame(view: View) {
