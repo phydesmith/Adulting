@@ -8,6 +8,10 @@ import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import com.example.adulting.jdata.entity.Card
+import com.example.adulting.jdata.modelview.CardViewModel
 import kotlinx.android.synthetic.main.activity_choice_screen.*
 import java.security.AccessController.getContext
 import kotlin.math.roundToInt
@@ -52,6 +56,9 @@ class ChoiceScreen : AppCompatActivity() {
         false
     }
 
+    // Game vars
+    private lateinit var cardViewModel : CardViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -59,6 +66,38 @@ class ChoiceScreen : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         mVisible = true
+
+        //  Game Logic
+        val id = getIntent().getIntExtra("cardId", 0)
+
+        cardViewModel = ViewModelProviders.of(this).get(CardViewModel::class.java) // from tutorial
+        val observer = Observer<List<Card>> { list ->
+            cardTitle.setText(list.get(0).cardName)
+            for(i in 0 until list.size ) {
+                if (i == 0) {
+                    choice1.setText(list.get(i).response)
+                } else if (i == 1){
+                    choice2.setText(list.get(i).response)
+                } else {
+                    choice3.setText(list.get(i).response)
+                }
+            }
+        }
+        cardViewModel.getCardByInfoId(id).observe(this, observer)
+
+        //  On clicks
+        choice1.setOnClickListener(View.OnClickListener {
+
+        })
+        choice2.setOnClickListener(View.OnClickListener {
+
+        })
+        choice3.setOnClickListener(View.OnClickListener {
+
+        })
+
+
+
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {

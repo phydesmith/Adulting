@@ -22,19 +22,36 @@ public class CardRepository {
     private CardInfoDAO cardInfoDAO;
     private ResponseDAO responseDAO;
     private CardDAO cardDAO;
-    private LiveData<List<CardType>> allCardTypes;
+
+    private List<Card> cardList;
+
     private LiveData<List<Card>> allCards;
+    private LiveData<List<Card>> relationshipCards;
+    private LiveData<List<Card>> educationCards;
+    private LiveData<List<Card>> healthCards;
+    private LiveData<List<Card>> wealthCards;
+
+    private LiveData<List<CardType>> allCardTypes;
     private LiveData<List<CardInfo>> allInfo;
     private LiveData<List<Response>> allResponses;
 
     public CardRepository(Application application){
         CardDatabase database = CardDatabase.getInstance(application);
+
         cardTypeDAO = database.cardTypeDAO();
         cardInfoDAO = database.cardInfoDAO();
         responseDAO = database.responseDAO();
         cardDAO = database.cardDAO();
-        allCardTypes = cardTypeDAO.getAllCardTypes();
+
+        //cardList = cardDAO.getCardList();
+
         allCards = cardDAO.getCards();
+        relationshipCards = cardDAO.getRelationshipCards();
+        educationCards = cardDAO.getEducationCards();
+        healthCards = cardDAO.getHealthCards();
+        wealthCards = cardDAO.getWealthCards();
+
+        allCardTypes = cardTypeDAO.getAllCardTypes();
         allInfo = cardInfoDAO.getAllCardInfo();
         allResponses = responseDAO.getAllResponses();
     }
@@ -89,10 +106,23 @@ public class CardRepository {
         }
     }
 
+    public List<Card> getCardList() { return cardList; }
+
+    public LiveData<List<Card>> getCards() { return allCards; }
+
+    public LiveData<List<Card>> getCardsByType(int type) {return cardDAO.getCardsByType(type); };
+    public LiveData<List<Card>> getCardByInfoId(int cardInfoId) {return cardDAO.getCardByInfoId(cardInfoId); }
+    public LiveData<List<Card>> getCardByTypeAndId(int type, int cardInfoId) {return cardDAO.getCardByTypeAndId(type, cardInfoId);}
+
+    public LiveData<List<Card>> getRelationshipCards() { return relationshipCards; }
+    public LiveData<List<Card>> getEducationCards() { return educationCards; }
+    public LiveData<List<Card>> getHealthCards() { return  healthCards; }
+    public LiveData<List<Card>> getWealthCards() { return wealthCards; }
+
+
     public LiveData<List<CardType>> getAllCardTypes(){
         return allCardTypes;
     }
-    public LiveData<List<Card>> getCards() { return allCards; }
     public LiveData<List<CardInfo>> getAllInfo() {return allInfo; }
     public LiveData<List<Response>> getAllResponses() {return allResponses; }
 
