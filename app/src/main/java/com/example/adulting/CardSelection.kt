@@ -56,7 +56,6 @@ class CardSelection : AppCompatActivity() {
      */
 
     //  Game Vars
-    private lateinit var cardViewModel : CardViewModel
     private val random = java.util.Random()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,7 +70,7 @@ class CardSelection : AppCompatActivity() {
         val cards = IntArray(3) {0}
         val cardId = IntArray(3) {0}
 
-        cardViewModel = ViewModelProviders.of(this).get(CardViewModel::class.java) // from tutorial
+        val cardViewModel = ViewModelProviders.of(this).get(CardViewModel::class.java) // from tutorial
 
         for ( i in 0 until 3) {
             val observer = Observer<List<Card>> { list ->

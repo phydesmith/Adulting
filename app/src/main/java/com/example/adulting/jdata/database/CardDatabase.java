@@ -2,6 +2,7 @@ package com.example.adulting.jdata.database;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.room.Database;
@@ -12,12 +13,14 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.example.adulting.jdata.dao.CardDAO;
 import com.example.adulting.jdata.dao.CardInfoDAO;
 import com.example.adulting.jdata.dao.CardTypeDAO;
+import com.example.adulting.jdata.dao.PlayerDAO;
 import com.example.adulting.jdata.dao.ResponseDAO;
 import com.example.adulting.jdata.entity.CardInfo;
 import com.example.adulting.jdata.entity.CardType;
+import com.example.adulting.jdata.entity.Player;
 import com.example.adulting.jdata.entity.Response;
 
-@Database(entities = {CardType.class, CardInfo.class, Response.class}, version = 2 )
+@Database(entities = {CardType.class, CardInfo.class, Response.class, Player.class}, version = 1 )
 public abstract class CardDatabase extends RoomDatabase {
 
     private static CardDatabase instance;
@@ -26,13 +29,14 @@ public abstract class CardDatabase extends RoomDatabase {
     public abstract CardInfoDAO cardInfoDAO();
     public abstract ResponseDAO responseDAO();
     public abstract CardDAO cardDAO();
+    public abstract PlayerDAO playerDAO();
 
     public static synchronized CardDatabase getInstance(Context context) {
         if (instance == null){
             instance = Room.databaseBuilder(context.getApplicationContext(),
                     CardDatabase.class, "card_database")
-                    .addCallback(roomCallback)
                     .fallbackToDestructiveMigration()
+                    .addCallback(roomCallback)
                     .build();
         }
         return  instance;
@@ -50,16 +54,20 @@ public abstract class CardDatabase extends RoomDatabase {
         private CardTypeDAO cardTypeDAO;
         private CardInfoDAO cardInfoDAO;
         private ResponseDAO responseDAO;
+        private PlayerDAO playerDAO;
 
         private PopulateDbAsyncTask(CardDatabase db) {
             cardTypeDAO = db.cardTypeDAO();
             cardInfoDAO = db.cardInfoDAO();
             responseDAO = db.responseDAO();
+            playerDAO = db.playerDAO();
         }
 
         @Override
         protected  Void doInBackground(Void... voids) {
             // On create here
+
+            playerDAO.insert(new Player(50, 50, 50, 50));
 
             cardTypeDAO.insert(new CardType("Relationship"));
             cardTypeDAO.insert(new CardType("Education"));
@@ -155,6 +163,8 @@ public abstract class CardDatabase extends RoomDatabase {
             responseDAO.insert(new Response(22,"Buy memebership",false,0,0,0,0,0,0,15,-10));
             responseDAO.insert(new Response(22,"Don't buy one",false,0,0,0,0,0,0,-15,10));
             responseDAO.insert(new Response(22,"Use what you have around your house for weights and overtime buy your own weights as a long term investment",true,0,15,0,5,0,0,10,-5));
+
+
             return null;
         }
 

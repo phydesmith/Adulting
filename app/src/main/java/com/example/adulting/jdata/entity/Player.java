@@ -1,10 +1,13 @@
 package com.example.adulting.jdata.entity;
 
 import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
-@Entity
+@Entity (tableName = "players")
 public class Player {
+    @PrimaryKey(autoGenerate = true)
     private int playerId;
+
     private int relationship;
     private int education;
     private int health;
@@ -59,9 +62,9 @@ public class Player {
 
     public String toString(){
         return "Id: " + this.playerId +
-                "Relationship: " + this.relationship +
-                "Education: " + this.education +
-                "Health: " + this.health +
-                "Wealth: " + this.wealth;
+                " Relationship: " + this.relationship +
+                " Education: " + this.education +
+                " Health: " + this.health +
+                " Wealth: " + this.wealth;
     }
 }

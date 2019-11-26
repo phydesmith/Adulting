@@ -57,7 +57,6 @@ class ChoiceScreen : AppCompatActivity() {
     }
 
     // Game vars
-    private lateinit var cardViewModel : CardViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,6 +69,7 @@ class ChoiceScreen : AppCompatActivity() {
         //  Game Logic
         val id = getIntent().getIntExtra("cardId", 0)
 
+        val cardViewModel : CardViewModel
         cardViewModel = ViewModelProviders.of(this).get(CardViewModel::class.java) // from tutorial
         val observer = Observer<List<Card>> { list ->
             cardTitle.setText(list.get(0).cardName)
