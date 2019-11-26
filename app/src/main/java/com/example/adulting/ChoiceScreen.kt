@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.adulting.jdata.entity.Card
+import com.example.adulting.jdata.entity.Player
 import com.example.adulting.jdata.modelview.CardViewModel
 import kotlinx.android.synthetic.main.activity_choice_screen.*
 import java.security.AccessController.getContext
@@ -69,8 +70,7 @@ class ChoiceScreen : AppCompatActivity() {
         //  Game Logic
         val id = getIntent().getIntExtra("cardId", 0)
 
-        val cardViewModel : CardViewModel
-        cardViewModel = ViewModelProviders.of(this).get(CardViewModel::class.java) // from tutorial
+        val cardViewModel = ViewModelProviders.of(this).get(CardViewModel::class.java) // from tutorial
         val observer = Observer<List<Card>> { list ->
             cardTitle.setText(list.get(0).cardName)
             for(i in 0 until list.size ) {
@@ -85,10 +85,25 @@ class ChoiceScreen : AppCompatActivity() {
         }
         cardViewModel.getCardByInfoId(id).observe(this, observer)
 
+        var player = Player(0,0,0,0)
+        cardViewModel.getPlayer(1).observe(this, Observer<List<Player>> {playerList ->
+            player = playerList.get(0)
+        })
+
         //  On clicks
         choice1.setOnClickListener(View.OnClickListener {
-
+            cardViewModel.getCardByInfoId(id).observe(this, Observer<List<Card>> {cardList ->
+                player.relationship += cardList.get(0).relationshipMod
+                player.education += cardList.get(0).educationMod
+                player.health += cardList.get(0).healthMod
+                player.wealth += cardList.get(0).wealthMod
+            })
+            cardViewModel.updatePlayer(player);
+            cardViewModel.getPlayer(1).observe(this, Observer<List<Player>> {playerList ->
+                Log.println(Log.DEBUG, "YEET PLAYER BEFORE/ ", playerList.get(0).toString())
+            })
         })
+
         choice2.setOnClickListener(View.OnClickListener {
 
         })
@@ -99,6 +114,9 @@ class ChoiceScreen : AppCompatActivity() {
 
 
     }
+
+    // game func
+
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
