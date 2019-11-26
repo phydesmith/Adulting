@@ -58,9 +58,7 @@ public class CardViewModel extends AndroidViewModel {
         repository.insert(response);
     }
 
-    //public List<Card> getCardList() {
-   //     return cardList;
-    //}
+
 
     public LiveData<List<Card>> getCards(){return this.allCards;}
 
