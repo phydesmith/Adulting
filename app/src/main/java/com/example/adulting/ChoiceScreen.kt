@@ -85,6 +85,18 @@ class ChoiceScreen : AppCompatActivity() {
         }
         cardViewModel.getCardByInfoId(id).observe(this, observer)
 
+        //  On clicks
+        choice1.setOnClickListener(View.OnClickListener {
+
+        })
+        choice2.setOnClickListener(View.OnClickListener {
+
+        })
+        choice3.setOnClickListener(View.OnClickListener {
+
+        })
+
+
 
     }
 
