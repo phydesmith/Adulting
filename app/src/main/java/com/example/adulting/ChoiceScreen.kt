@@ -58,6 +58,7 @@ class ChoiceScreen : AppCompatActivity() {
     }
 
     // Game vars
+    private lateinit var cardViewModel : CardViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,8 +70,7 @@ class ChoiceScreen : AppCompatActivity() {
 
         //  Game Logic
         val id = getIntent().getIntExtra("cardId", 0)
-
-        val cardViewModel = ViewModelProviders.of(this).get(CardViewModel::class.java) // from tutorial
+        cardViewModel = ViewModelProviders.of(this).get(CardViewModel::class.java) // from tutorial
         val observer = Observer<List<Card>> { list ->
             cardTitle.setText(list.get(0).cardName)
             for(i in 0 until list.size ) {
@@ -85,30 +85,54 @@ class ChoiceScreen : AppCompatActivity() {
         }
         cardViewModel.getCardByInfoId(id).observe(this, observer)
 
-        var player = Player(0,0,0,0)
-        cardViewModel.getPlayer(1).observe(this, Observer<List<Player>> {playerList ->
-            player = playerList.get(0)
-        })
 
         //  On clicks
         choice1.setOnClickListener(View.OnClickListener {
+            val player = getPlayer()
             cardViewModel.getCardByInfoId(id).observe(this, Observer<List<Card>> {cardList ->
                 player.relationship += cardList.get(0).relationshipMod
                 player.education += cardList.get(0).educationMod
                 player.health += cardList.get(0).healthMod
                 player.wealth += cardList.get(0).wealthMod
             })
+
+            cardViewModel.updatePlayer(player);
+
+            finish()
+        })
+        choice2.setOnClickListener(View.OnClickListener {
+            val player = getPlayer()
+            cardViewModel.getCardByInfoId(id).observe(this, Observer<List<Card>> {cardList ->
+                player.relationship += cardList.get(1).relationshipMod
+                player.education += cardList.get(1).educationMod
+                player.health += cardList.get(1).healthMod
+                player.wealth += cardList.get(1).wealthMod
+            })
+            cardViewModel.getPlayer(1).observe(this, Observer<List<Player>> {playerList ->
+                Log.println(Log.DEBUG, "YEET PLAYER Before/ ", playerList.get(0).toString())
+            })
             cardViewModel.updatePlayer(player);
             cardViewModel.getPlayer(1).observe(this, Observer<List<Player>> {playerList ->
-                Log.println(Log.DEBUG, "YEET PLAYER BEFORE/ ", playerList.get(0).toString())
+                Log.println(Log.DEBUG, "YEET PLAYER After/ ", playerList.get(0).toString())
             })
-        })
-
-        choice2.setOnClickListener(View.OnClickListener {
-
+            finish()
         })
         choice3.setOnClickListener(View.OnClickListener {
-
+            val player = getPlayer()
+            cardViewModel.getCardByInfoId(id).observe(this, Observer<List<Card>> {cardList ->
+                player.relationship += cardList.get(2).relationshipMod
+                player.education += cardList.get(2).educationMod
+                player.health += cardList.get(2).healthMod
+                player.wealth += cardList.get(2).wealthMod
+            })
+            cardViewModel.getPlayer(1).observe(this, Observer<List<Player>> {playerList ->
+                Log.println(Log.DEBUG, "YEET PLAYER Before/ ", playerList.get(0).toString())
+            })
+            cardViewModel.updatePlayer(player);
+            cardViewModel.getPlayer(1).observe(this, Observer<List<Player>> {playerList ->
+                Log.println(Log.DEBUG, "YEET PLAYER After/ ", playerList.get(0).toString())
+            })
+            finish()
         })
 
 
@@ -116,6 +140,13 @@ class ChoiceScreen : AppCompatActivity() {
     }
 
     // game func
+    fun getPlayer() : Player {
+        var player = Player(0,0,0,0)
+        cardViewModel.getPlayer(1).observe(this, Observer {playerList ->
+            player = playerList.get(0)
+        })
+        return player
+    }
 
 
     override fun onPostCreate(savedInstanceState: Bundle?) {

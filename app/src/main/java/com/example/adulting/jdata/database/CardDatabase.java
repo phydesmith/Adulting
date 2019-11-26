@@ -67,6 +67,8 @@ public abstract class CardDatabase extends RoomDatabase {
         protected  Void doInBackground(Void... voids) {
             // On create here
 
+            Log.println(Log.DEBUG, "YEET/", " - Populate DB Async Task start");
+
             playerDAO.insert(new Player(50, 50, 50, 50));
 
             cardTypeDAO.insert(new CardType("Relationship"));
@@ -164,7 +166,7 @@ public abstract class CardDatabase extends RoomDatabase {
             responseDAO.insert(new Response(22,"Don't buy one",false,0,0,0,0,0,0,-15,10));
             responseDAO.insert(new Response(22,"Use what you have around your house for weights and overtime buy your own weights as a long term investment",true,0,15,0,5,0,0,10,-5));
 
-
+            Log.println(Log.DEBUG, "YEET/", " - Populate DB Async Task end");
             return null;
         }
 

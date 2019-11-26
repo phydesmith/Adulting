@@ -23,8 +23,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val cardViewModel = ViewModelProviders.of(this).get(CardViewModel::class.java) // from tutorial
-        cardViewModel.getPlayer(1).observe(this, Observer { list ->
-            Log.println(Log.DEBUG, "YEET - PLAYER", list.get(0).toString()) })
+        cardViewModel.getPlayer(1).observe(this, Observer {}) // this needs to be here so db populates on a clean start up
     }
 
     fun startGame(view: View) {
