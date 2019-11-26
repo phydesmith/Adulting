@@ -67,8 +67,8 @@ class ChoiceScreen : AppCompatActivity() {
 
         mVisible = true
 
-        val type = getIntent().getIntExtra("type", 0)
-        val card = getIntent().getIntExtra("card", 0)
+        //  Game Logic
+        val id = getIntent().getIntExtra("cardId", 0)
 
         cardViewModel = ViewModelProviders.of(this).get(CardViewModel::class.java) // from tutorial
         val observer = Observer<List<Card>> { list ->
@@ -83,7 +83,7 @@ class ChoiceScreen : AppCompatActivity() {
                 }
             }
         }
-        cardViewModel.getCardByTypeAndId(type, card).observe(this, observer)
+        cardViewModel.getCardByInfoId(id).observe(this, observer)
 
 
     }

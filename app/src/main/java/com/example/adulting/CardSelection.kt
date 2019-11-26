@@ -68,11 +68,12 @@ class CardSelection : AppCompatActivity() {
         mVisible = true
 
         // Game Logic
-        val randomTypes = getTypes();
         val cards = IntArray(3) {0}
+        val cardId = IntArray(3) {0}
+
+        cardViewModel = ViewModelProviders.of(this).get(CardViewModel::class.java) // from tutorial
 
         for ( i in 0 until 3) {
-            cardViewModel = ViewModelProviders.of(this).get(CardViewModel::class.java) // from tutorial
             val observer = Observer<List<Card>> { list ->
                 cards[i] = random.nextInt(list.size)
                 if (i == 0) {
@@ -82,8 +83,9 @@ class CardSelection : AppCompatActivity() {
                 } else {
                     frontCardTitle.text = list.get(cards[i]).cardName
                 }
+                cardId[i] = list.get(cards[i]).cardInfoId
             }
-            cardViewModel.getCardsByType(randomTypes[i]).observe(this, observer)
+            cardViewModel.getCardsByType(random.nextInt(4)+1).observe(this, observer)
         }
 
 
@@ -98,21 +100,21 @@ class CardSelection : AppCompatActivity() {
 
         backCard.setOnClickListener(View.OnClickListener {
             val myIntent = Intent(this, ChoiceScreen::class.java)
-            myIntent.putExtra("type", randomTypes[0])
+            myIntent.putExtra("cardId", cardId[0])
             myIntent.putExtra("card", cards[0])
             startActivityForResult(myIntent, 1234)
             delayedHide(0)
         })
         middleCard.setOnClickListener(View.OnClickListener {
             val myIntent = Intent(this, ChoiceScreen::class.java)
-            myIntent.putExtra("type", randomTypes[1])
+            myIntent.putExtra("cardId", cardId[1])
             myIntent.putExtra("card", cards[1])
             startActivityForResult(myIntent, 1234)
             delayedHide(0)
         })
         frontCard.setOnClickListener(View.OnClickListener {
             val myIntent = Intent(this, ChoiceScreen::class.java)
-            myIntent.putExtra("type", randomTypes[2])
+            myIntent.putExtra("cardId", cardId[2])
             myIntent.putExtra("card", cards[2])
             startActivityForResult(myIntent, 1234)
             delayedHide(0)
