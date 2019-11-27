@@ -7,13 +7,21 @@ import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.adulting.jdata.entity.Card
 import com.example.adulting.jdata.entity.Player
 import com.example.adulting.jdata.modelview.CardViewModel
+import kotlinx.android.synthetic.main.activity_card_selection.*
 import kotlinx.android.synthetic.main.activity_choice_screen.*
+import kotlinx.android.synthetic.main.activity_choice_screen.fullscreen_content
+import kotlinx.android.synthetic.main.activity_choice_screen.fullscreen_content_controls
+import kotlinx.android.synthetic.main.activity_choice_screen.valueEducation
+import kotlinx.android.synthetic.main.activity_choice_screen.valueHealth
+import kotlinx.android.synthetic.main.activity_choice_screen.valueRelationships
+import kotlinx.android.synthetic.main.activity_choice_screen.valueWealth
 import java.security.AccessController.getContext
 import kotlin.math.roundToInt
 
@@ -85,53 +93,53 @@ class ChoiceScreen : AppCompatActivity() {
         }
         cardViewModel.getCardByInfoId(id).observe(this, observer)
 
+        var player = Player(0,0,0,0)
+        cardViewModel.getPlayer(1).observe(this, Observer {playerList ->
+            player = playerList.get(0);
+        })
+
+
 
         //  On clicks
         choice1.setOnClickListener(View.OnClickListener {
-            val player = getPlayer()
+            Log.println(Log.DEBUG, "YEET - 1", player.toString())
             cardViewModel.getCardByInfoId(id).observe(this, Observer<List<Card>> {cardList ->
                 player.relationship += cardList.get(0).relationshipMod
                 player.education += cardList.get(0).educationMod
                 player.health += cardList.get(0).healthMod
                 player.wealth += cardList.get(0).wealthMod
+                Log.println(Log.DEBUG, "YEET - in observer", player.toString())
             })
-
-            cardViewModel.updatePlayer(player);
-
+            //player.playerId = 1
+            Log.println(Log.DEBUG, "Yeet - 2: ", player.toString());
+            cardViewModel.updatePlayer(player)
+            playerStatus.text = player.toString()
             finish()
         })
         choice2.setOnClickListener(View.OnClickListener {
-            val player = getPlayer()
             cardViewModel.getCardByInfoId(id).observe(this, Observer<List<Card>> {cardList ->
                 player.relationship += cardList.get(1).relationshipMod
                 player.education += cardList.get(1).educationMod
                 player.health += cardList.get(1).healthMod
                 player.wealth += cardList.get(1).wealthMod
             })
-            cardViewModel.getPlayer(1).observe(this, Observer<List<Player>> {playerList ->
-                Log.println(Log.DEBUG, "YEET PLAYER Before/ ", playerList.get(0).toString())
-            })
+            Log.println(Log.DEBUG, "Yeet - 2: ", player.toString());
+            //player.playerId = 1
+            val tv = playerStatus.findViewById<TextView>(R.id.playerStatus)
+            tv.text = player.toString()
             cardViewModel.updatePlayer(player);
-            cardViewModel.getPlayer(1).observe(this, Observer<List<Player>> {playerList ->
-                Log.println(Log.DEBUG, "YEET PLAYER After/ ", playerList.get(0).toString())
-            })
             finish()
         })
         choice3.setOnClickListener(View.OnClickListener {
-            val player = getPlayer()
             cardViewModel.getCardByInfoId(id).observe(this, Observer<List<Card>> {cardList ->
                 player.relationship += cardList.get(2).relationshipMod
                 player.education += cardList.get(2).educationMod
                 player.health += cardList.get(2).healthMod
                 player.wealth += cardList.get(2).wealthMod
             })
-            cardViewModel.getPlayer(1).observe(this, Observer<List<Player>> {playerList ->
-                Log.println(Log.DEBUG, "YEET PLAYER Before/ ", playerList.get(0).toString())
-            })
+            //player.playerId = 1
+            Log.println(Log.DEBUG, "Yeet - 3: ", player.toString());
             cardViewModel.updatePlayer(player);
-            cardViewModel.getPlayer(1).observe(this, Observer<List<Player>> {playerList ->
-                Log.println(Log.DEBUG, "YEET PLAYER After/ ", playerList.get(0).toString())
-            })
             finish()
         })
 
@@ -140,13 +148,7 @@ class ChoiceScreen : AppCompatActivity() {
     }
 
     // game func
-    fun getPlayer() : Player {
-        var player = Player(0,0,0,0)
-        cardViewModel.getPlayer(1).observe(this, Observer {playerList ->
-            player = playerList.get(0)
-        })
-        return player
-    }
+
 
 
     override fun onPostCreate(savedInstanceState: Bundle?) {

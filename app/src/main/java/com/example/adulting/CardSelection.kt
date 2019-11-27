@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.example.adulting.jdata.entity.Card
+import com.example.adulting.jdata.entity.Player
 import com.example.adulting.jdata.modelview.CardViewModel
 import kotlinx.android.synthetic.main.activity_card_selection.*
 import java.security.AccessController.getContext
@@ -87,6 +88,16 @@ class CardSelection : AppCompatActivity() {
             cardViewModel.getCardsByType(random.nextInt(4)+1).observe(this, observer)
         }
 
+        cardViewModel.getPlayer(1)
+        cardViewModel.getPlayer(1).observe(this, Observer<List<Player>> {playerList ->
+            playerStatus.text = playerList.get(0).toString()
+            @Override
+            fun onChanged(playerList : List<Player>){
+                playerStatus.text = playerList.get(0).toString()
+            }
+
+        })
+
 
         testAddR.setOnClickListener(View.OnClickListener {
             Log.i("Test Button", "Plus 10")
@@ -118,7 +129,6 @@ class CardSelection : AppCompatActivity() {
             startActivityForResult(myIntent, 1234)
             delayedHide(0)
         })
-
 
 
     }
