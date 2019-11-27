@@ -1,6 +1,7 @@
 package com.example.adulting.jdata.modelview;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -9,6 +10,7 @@ import androidx.lifecycle.LiveData;
 import com.example.adulting.jdata.entity.Card;
 import com.example.adulting.jdata.entity.CardInfo;
 import com.example.adulting.jdata.entity.CardType;
+import com.example.adulting.jdata.entity.Player;
 import com.example.adulting.jdata.entity.Response;
 import com.example.adulting.jdata.repository.CardRepository;
 
@@ -17,29 +19,22 @@ import java.util.List;
 public class CardViewModel extends AndroidViewModel {
     private CardRepository repository;
 
-    private List<Card> cardList;
-
     private LiveData<List<Card>> allCards;
-    private LiveData<List<Card>> relationshipCards;
-    private LiveData<List<Card>> educationCards;
-    private LiveData<List<Card>> healthCards;
-    private LiveData<List<Card>> wealthCards;
 
     private LiveData<List<CardType>> allTypes;
     private LiveData<List<CardInfo>> allInfo;
     private LiveData<List<Response>> allResponses;
 
+    private LiveData<List<Player>> allPlayers;
+
     public CardViewModel(@NonNull Application application){
         super(application);
+
         repository = new CardRepository(application);
 
-        cardList = repository.getCardList();
-
         allCards = repository.getCards();
-        relationshipCards = repository.getRelationshipCards();
-        educationCards = repository.getEducationCards();
-        healthCards = repository.getHealthCards();
-        wealthCards = repository.getWealthCards();
+
+        allPlayers = repository.getPlayers();
 
         allTypes = repository.getAllCardTypes();
         allInfo = repository.getAllInfo();
@@ -58,6 +53,9 @@ public class CardViewModel extends AndroidViewModel {
         repository.insert(response);
     }
 
+    public void insertPlayer(Player player) {repository.insert(player);}
+
+    public void updatePlayer(Player player) {repository.update((player));}
 
 
     public LiveData<List<Card>> getCards(){return this.allCards;}
@@ -66,10 +64,8 @@ public class CardViewModel extends AndroidViewModel {
     public LiveData<List<Card>> getCardByInfoId(int cardInfoId) {return repository.getCardByInfoId(cardInfoId); }
     public LiveData<List<Card>> getCardByTypeAndId(int type, int cardInfoId) {return repository.getCardByTypeAndId(type, cardInfoId);}
 
-    public LiveData<List<Card>> getRelationshipCards() {return this.relationshipCards; }
-    public LiveData<List<Card>> getEducationCards() {return this.educationCards; }
-    public LiveData<List<Card>> getHealthCards() {return this.healthCards; }
-    public LiveData<List<Card>> getWealthCards() {return this.wealthCards; }
+    public LiveData<List<Player>> getPlayer(int playerId) { return repository.getPlayer(playerId); };
+    public LiveData<List<Player>> getPlayers() { return allPlayers; };
 
     public LiveData<List<CardType>> getAllTypes() {
         return allTypes;

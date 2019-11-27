@@ -1,19 +1,29 @@
 package com.example.adulting
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.adulting.jdata.entity.Card
+import com.example.adulting.jdata.entity.Player
 import com.example.adulting.jdata.modelview.CardViewModel
+import com.example.adulting.jdata.repository.CardRepository
+import kotlinx.android.synthetic.main.activity_card_selection.*
 import kotlinx.android.synthetic.main.activity_choice_screen.*
-import java.security.AccessController.getContext
+import kotlinx.android.synthetic.main.activity_choice_screen.fullscreen_content
+import kotlinx.android.synthetic.main.activity_choice_screen.fullscreen_content_controls
+import kotlinx.android.synthetic.main.activity_choice_screen.valueEducation
+import kotlinx.android.synthetic.main.activity_choice_screen.valueHealth
+import kotlinx.android.synthetic.main.activity_choice_screen.valueRelationships
+import kotlinx.android.synthetic.main.activity_choice_screen.valueWealth
 import kotlin.math.roundToInt
 
 
@@ -68,8 +78,9 @@ class ChoiceScreen : AppCompatActivity() {
         mVisible = true
 
         //  Game Logic
-        val id = getIntent().getIntExtra("cardId", 0)
 
+        // put responses in correct places
+        val id = getIntent().getIntExtra("cardId", 0)
         cardViewModel = ViewModelProviders.of(this).get(CardViewModel::class.java) // from tutorial
         val observer = Observer<List<Card>> { list ->
             cardTitle.setText(list.get(0).cardName)
@@ -85,20 +96,63 @@ class ChoiceScreen : AppCompatActivity() {
         }
         cardViewModel.getCardByInfoId(id).observe(this, observer)
 
+        // player object
+        var player = Player(0,0,0,0)
+        cardViewModel.players.observe(this, Observer {playerList ->
+            System.out.println("YEET - listObj - b4 " + playerList.get(0).toString())
+            System.out.println("YEET - playerObj - b4 " + player.toString())
+            player = playerList.get(0);
+            System.out.println("YEET - playerObj - Aft " + player.toString())
+        })
+
+
+
         //  On clicks
         choice1.setOnClickListener(View.OnClickListener {
-
+            System.out.println("YEET - clickListener 1 start")
+            cardViewModel.getCardByInfoId(id).observe(this, Observer<List<Card>> {it ->
+                System.out.println("YEET - clickListener 1 obsv start")
+                cardViewModel.updatePlayer(Player(1,
+                    player.relationship + it.get(0).relationshipMod,
+                    player.education + it.get(0).educationMod,
+                    player.health + it.get(0).healthMod,
+                    player.wealth + it.get(0).wealthMod))
+                System.out.println("YEET - clickListener 1 obsv End")
+            })
+            System.out.println("YEET - clickListener 1 End")
+            finish()
         })
-        choice2.setOnClickListener(View.OnClickListener {
 
+        /*
+        choice2.setOnClickListener(View.OnClickListener {
+            cardViewModel.getCardByInfoId(id).observe(this, Observer<List<Card>> {cardList ->
+                player.relationship += cardList.get(1).relationshipMod
+                player.education += cardList.get(1).educationMod
+                player.health += cardList.get(1).healthMod
+                player.wealth += cardList.get(1).wealthMod
+            })
+            cardViewModel.updatePlayer(player);
+            finish()
         })
         choice3.setOnClickListener(View.OnClickListener {
-
+            cardViewModel.getCardByInfoId(id).observe(this, Observer<List<Card>> {cardList ->
+                player.relationship += cardList.get(2).relationshipMod
+                player.education += cardList.get(2).educationMod
+                player.health += cardList.get(2).healthMod
+                player.wealth += cardList.get(2).wealthMod
+            })
+            cardViewModel.updatePlayer(player);
+            finish()
         })
+        */
 
 
 
     }
+
+    // game func
+
+
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)

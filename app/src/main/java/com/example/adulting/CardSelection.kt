@@ -1,7 +1,6 @@
 package com.example.adulting
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.util.DisplayMetrics
@@ -9,17 +8,15 @@ import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import androidx.annotation.Nullable
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.example.adulting.jdata.entity.Card
+import com.example.adulting.jdata.entity.Player
 import com.example.adulting.jdata.modelview.CardViewModel
 import kotlinx.android.synthetic.main.activity_card_selection.*
-import java.security.AccessController.getContext
 import kotlin.math.roundToInt
-import kotlin.random.Random
 
 
 /**
@@ -56,7 +53,6 @@ class CardSelection : AppCompatActivity() {
      */
 
     //  Game Vars
-    private lateinit var cardViewModel : CardViewModel
     private val random = java.util.Random()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,8 +67,9 @@ class CardSelection : AppCompatActivity() {
         val cards = IntArray(3) {0}
         val cardId = IntArray(3) {0}
 
-        cardViewModel = ViewModelProviders.of(this).get(CardViewModel::class.java) // from tutorial
+        val cardViewModel = ViewModelProviders.of(this).get(CardViewModel::class.java) // from tutorial
 
+        //  Generate Card Titles
         for ( i in 0 until 3) {
             val observer = Observer<List<Card>> { list ->
                 cards[i] = random.nextInt(list.size)
@@ -89,6 +86,17 @@ class CardSelection : AppCompatActivity() {
         }
 
 
+        // Observe the Score
+        val observer = Observer<List<Player>> {
+            playerStatus.setText(it.get(it.size-1).toString())
+            System.out.println("YEET TEST 2 " + it.get(it.size-1))
+
+        }
+        cardViewModel.players.observe(this, observer)
+        //cardViewModel.insertPlayer(Player(1,2,3,4))
+
+
+        //  Test Buttons for icon
         testAddR.setOnClickListener(View.OnClickListener {
             Log.i("Test Button", "Plus 10")
             updateCatValues(10, 'R')
@@ -98,13 +106,17 @@ class CardSelection : AppCompatActivity() {
             updateCatValues(-10, 'R')
         })
 
+        //  On click listeners for cards
         backCard.setOnClickListener(View.OnClickListener {
             val myIntent = Intent(this, ChoiceScreen::class.java)
             myIntent.putExtra("cardId", cardId[0])
             myIntent.putExtra("card", cards[0])
             startActivityForResult(myIntent, 1234)
             delayedHide(0)
+            recreate()
         })
+
+        /*
         middleCard.setOnClickListener(View.OnClickListener {
             val myIntent = Intent(this, ChoiceScreen::class.java)
             myIntent.putExtra("cardId", cardId[1])
@@ -119,8 +131,7 @@ class CardSelection : AppCompatActivity() {
             startActivityForResult(myIntent, 1234)
             delayedHide(0)
         })
-
-
+        */
 
     }
 
@@ -132,7 +143,6 @@ class CardSelection : AppCompatActivity() {
         }
         return types
     }
-
 
 
     override fun onPostCreate(savedInstanceState: Bundle?) {

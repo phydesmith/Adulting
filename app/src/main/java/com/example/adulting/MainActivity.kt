@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.example.adulting.jdata.database.CardDatabase
 import com.example.adulting.jdata.entity.Card
 import com.example.adulting.jdata.entity.CardInfo
@@ -21,6 +22,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val cardViewModel = ViewModelProviders.of(this).get(CardViewModel::class.java) // from tutorial
+        cardViewModel.players.observe(this, Observer {}) // this needs to be here so db populates on a clean start up
     }
 
     fun startGame(view: View) {
