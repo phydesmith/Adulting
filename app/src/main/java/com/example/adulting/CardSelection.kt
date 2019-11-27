@@ -1,7 +1,6 @@
 package com.example.adulting
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.util.DisplayMetrics
@@ -9,18 +8,15 @@ import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import androidx.annotation.Nullable
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.example.adulting.jdata.entity.Card
 import com.example.adulting.jdata.entity.Player
 import com.example.adulting.jdata.modelview.CardViewModel
 import kotlinx.android.synthetic.main.activity_card_selection.*
-import java.security.AccessController.getContext
 import kotlin.math.roundToInt
-import kotlin.random.Random
 
 
 /**
@@ -88,14 +84,13 @@ class CardSelection : AppCompatActivity() {
             cardViewModel.getCardsByType(random.nextInt(4)+1).observe(this, observer)
         }
 
-        cardViewModel.getPlayer(1)
         cardViewModel.getPlayer(1).observe(this, Observer<List<Player>> {playerList ->
-            playerStatus.text = playerList.get(0).toString()
+            playerStatus.text = playerList.get(playerList.size-1).toString()
             @Override
-            fun onChanged(playerList : List<Player>){
-                playerStatus.text = playerList.get(0).toString()
+            fun onChanged(@Nullable playerList : List<Player>){
+                System.out.println("YEET on changed" + playerList.toString())
+                playerStatus.text = playerList.get(playerList.size-1).toString()
             }
-
         })
 
 
