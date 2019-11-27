@@ -78,6 +78,8 @@ class ChoiceScreen : AppCompatActivity() {
         mVisible = true
 
         //  Game Logic
+
+        // put responses in correct places
         val id = getIntent().getIntExtra("cardId", 0)
         cardViewModel = ViewModelProviders.of(this).get(CardViewModel::class.java) // from tutorial
         val observer = Observer<List<Card>> { list ->
@@ -94,25 +96,34 @@ class ChoiceScreen : AppCompatActivity() {
         }
         cardViewModel.getCardByInfoId(id).observe(this, observer)
 
+        // player object
         var player = Player(0,0,0,0)
-        cardViewModel.getPlayer(1).observe(this, Observer {playerList ->
+        cardViewModel.players.observe(this, Observer {playerList ->
+            System.out.println("YEET - listObj - b4 " + playerList.get(0).toString())
+            System.out.println("YEET - playerObj - b4 " + player.toString())
             player = playerList.get(0);
+            System.out.println("YEET - playerObj - Aft " + player.toString())
         })
 
 
 
         //  On clicks
         choice1.setOnClickListener(View.OnClickListener {
-            cardViewModel.getCardByInfoId(id).observe(this, Observer<List<Card>> {cardList ->
-                player.relationship += cardList.get(0).relationshipMod
-                player.education += cardList.get(0).educationMod
-                player.health += cardList.get(0).healthMod
-                player.wealth += cardList.get(0).wealthMod
-                Log.println(Log.DEBUG, "YEET - in observer", player.toString())
+            System.out.println("YEET - clickListener 1 start")
+            cardViewModel.getCardByInfoId(id).observe(this, Observer<List<Card>> {it ->
+                System.out.println("YEET - clickListener 1 obsv start")
+                cardViewModel.updatePlayer(Player(1,
+                    player.relationship + it.get(0).relationshipMod,
+                    player.education + it.get(0).educationMod,
+                    player.health + it.get(0).healthMod,
+                    player.wealth + it.get(0).wealthMod))
+                System.out.println("YEET - clickListener 1 obsv End")
             })
-            cardViewModel.updatePlayer(player)
+            System.out.println("YEET - clickListener 1 End")
             finish()
         })
+
+        /*
         choice2.setOnClickListener(View.OnClickListener {
             cardViewModel.getCardByInfoId(id).observe(this, Observer<List<Card>> {cardList ->
                 player.relationship += cardList.get(1).relationshipMod
@@ -133,6 +144,7 @@ class ChoiceScreen : AppCompatActivity() {
             cardViewModel.updatePlayer(player);
             finish()
         })
+        */
 
 
 

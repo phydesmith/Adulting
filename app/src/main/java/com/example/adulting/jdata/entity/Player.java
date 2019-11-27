@@ -1,6 +1,7 @@
 package com.example.adulting.jdata.entity;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity (tableName = "players")
@@ -14,6 +15,15 @@ public class Player {
     private int wealth;
 
     public Player(int relationship, int education, int health, int wealth) {
+        this.relationship = relationship;
+        this.education = education;
+        this.health = health;
+        this.wealth = wealth;
+    }
+
+    @Ignore
+    public Player(int playerId, int relationship, int education, int health, int wealth) {
+        this.playerId =  playerId;
         this.relationship = relationship;
         this.education = education;
         this.health = health;

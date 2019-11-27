@@ -29,6 +29,8 @@ public class CardRepository {
 
     private LiveData<List<Card>> allCards;
 
+    private LiveData<List<Player>> allPlayers;
+
     private LiveData<List<CardType>> allCardTypes;
     private LiveData<List<CardInfo>> allInfo;
     private LiveData<List<Response>> allResponses;
@@ -45,6 +47,8 @@ public class CardRepository {
         playerDAO = database.playerDAO();
 
         allCards = cardDAO.getCards();
+
+        allPlayers = playerDAO.getPlayers();
 
         allCardTypes = cardTypeDAO.getAllCardTypes();
         allInfo = cardInfoDAO.getAllCardInfo();
@@ -144,6 +148,7 @@ public class CardRepository {
     public LiveData<List<Card>> getCardByInfoId(int cardInfoId) {return cardDAO.getCardByInfoId(cardInfoId); }
     public LiveData<List<Card>> getCardByTypeAndId(int type, int cardInfoId) {return cardDAO.getCardByTypeAndId(type, cardInfoId);}
     public LiveData<List<Player>> getPlayer(int playerId) { return playerDAO.getPlayer(playerId); };
+    public LiveData<List<Player>> getPlayers() { return allPlayers; };
 
     public LiveData<List<CardType>> getAllCardTypes(){
         return allCardTypes;

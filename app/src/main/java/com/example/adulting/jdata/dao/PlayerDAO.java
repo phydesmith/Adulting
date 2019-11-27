@@ -25,4 +25,9 @@ public interface PlayerDAO {
     )
     LiveData<List<Player>> getPlayer(int playerId);
 
+    @Query(
+            "SELECT * FROM players"
+    )
+    LiveData<List<Player>> getPlayers();
+
 }

@@ -69,6 +69,7 @@ class CardSelection : AppCompatActivity() {
 
         val cardViewModel = ViewModelProviders.of(this).get(CardViewModel::class.java) // from tutorial
 
+        //  Generate Card Titles
         for ( i in 0 until 3) {
             val observer = Observer<List<Card>> { list ->
                 cards[i] = random.nextInt(list.size)
@@ -84,16 +85,18 @@ class CardSelection : AppCompatActivity() {
             cardViewModel.getCardsByType(random.nextInt(4)+1).observe(this, observer)
         }
 
-        cardViewModel.getPlayer(1).observe(this, Observer<List<Player>> {playerList ->
-            playerStatus.text = playerList.get(playerList.size-1).toString()
-            @Override
-            fun onChanged(@Nullable playerList : List<Player>){
-                System.out.println("YEET on changed" + playerList.toString())
-                playerStatus.text = playerList.get(playerList.size-1).toString()
-            }
-        })
+
+        // Observe the Score
+        val observer = Observer<List<Player>> {
+            playerStatus.setText(it.get(it.size-1).toString())
+            System.out.println("YEET TEST 2 " + it.get(it.size-1))
+
+        }
+        cardViewModel.players.observe(this, observer)
+        //cardViewModel.insertPlayer(Player(1,2,3,4))
 
 
+        //  Test Buttons for icon
         testAddR.setOnClickListener(View.OnClickListener {
             Log.i("Test Button", "Plus 10")
             updateCatValues(10, 'R')
@@ -103,13 +106,17 @@ class CardSelection : AppCompatActivity() {
             updateCatValues(-10, 'R')
         })
 
+        //  On click listeners for cards
         backCard.setOnClickListener(View.OnClickListener {
             val myIntent = Intent(this, ChoiceScreen::class.java)
             myIntent.putExtra("cardId", cardId[0])
             myIntent.putExtra("card", cards[0])
             startActivityForResult(myIntent, 1234)
             delayedHide(0)
+            recreate()
         })
+
+        /*
         middleCard.setOnClickListener(View.OnClickListener {
             val myIntent = Intent(this, ChoiceScreen::class.java)
             myIntent.putExtra("cardId", cardId[1])
@@ -124,7 +131,7 @@ class CardSelection : AppCompatActivity() {
             startActivityForResult(myIntent, 1234)
             delayedHide(0)
         })
-
+        */
 
     }
 
@@ -136,7 +143,6 @@ class CardSelection : AppCompatActivity() {
         }
         return types
     }
-
 
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
