@@ -66,12 +66,54 @@ class CardSelection : AppCompatActivity() {
 
         mVisible = true
 
-        // Game Logic
+        /*
+        *----------------------------------------------------------------
+        * Game Logic
+        *----------------------------------------------------------------
+        */
         val cardViewModel = ViewModelProviders.of(this).get(CardViewModel::class.java) // from tutorial
-        
+
         drawCards(cardViewModel);
         observeScore(cardViewModel);
 
+        //  On click listeners for cards
+        backCard.setOnClickListener(View.OnClickListener {
+            //  Sends information to response activity
+            startResponseSelection(cardViewModel, 0);
+            // repopulate cards, needs delay so it does not change while user can see
+            Handler().postDelayed({drawCards(cardViewModel);}, 1000)
+            // update scores
+            observeScore(cardViewModel);
+        })
+
+        /*
+        middleCard.setOnClickListener(View.OnClickListener {
+            //  Sends information to response activity
+            startResponseSelection(cardViewModel, 1);
+
+            // repopulate cards, needs delay so it does not change while user can see
+            Handler().postDelayed({drawCards(cardViewModel);}, 1000)
+
+            // update scores
+            observeScore(cardViewModel);
+        })
+        frontCard.setOnClickListener(View.OnClickListener {
+            //  Sends information to response activity
+            startResponseSelection(cardViewModel, 2);
+
+            // repopulate cards, needs delay so it does not change while user can see
+            Handler().postDelayed({drawCards(cardViewModel);}, 1000)
+
+            // update scores
+            observeScore(cardViewModel);
+        })
+        */
+
+        /*
+        *----------------------------------------------------------------
+        * Testing
+        *----------------------------------------------------------------
+        */
         //  Test Buttons for icon
         testAddR.setOnClickListener(View.OnClickListener {
             Log.i("Test Button", "Plus 10")
@@ -81,53 +123,15 @@ class CardSelection : AppCompatActivity() {
             Log.i("Test Button", "Minus 10")
             updateCatValues(-10, 'R')
         })
-
-        //  On click listeners for cards
-        backCard.setOnClickListener(View.OnClickListener {
-            val myIntent = Intent(this, ChoiceScreen::class.java)
-            myIntent.putExtra("cardId", cardId[0])
-            myIntent.putExtra("card", cards[0])
-            startActivityForResult(myIntent, 1234)
-            delayedHide(0)
-
-            // redraw cards needs delay so it does not change while user can see
-            Handler().postDelayed({
-                drawCards(cardViewModel);
-            }, 1000)
-
-            // update scores
-            observeScore(cardViewModel);
-        })
-
-        /*
-        middleCard.setOnClickListener(View.OnClickListener {
-            val myIntent = Intent(this, ChoiceScreen::class.java)
-            myIntent.putExtra("cardId", cardId[1])
-            myIntent.putExtra("card", cards[1])
-            startActivityForResult(myIntent, 1234)
-            delayedHide(0)
-        })
-        frontCard.setOnClickListener(View.OnClickListener {
-            val myIntent = Intent(this, ChoiceScreen::class.java)
-            myIntent.putExtra("cardId", cardId[2])
-            myIntent.putExtra("card", cards[2])
-            startActivityForResult(myIntent, 1234)
-            delayedHide(0)
-        })
-        */
-
     }
 
-    // game functions
-    private fun getTypes() : IntArray{
-        val types = IntArray(3){0}
-        for ( i in 0 until 3 ){
-            types[i] = (random.nextInt(4)+1)
-        }
-        return types
-    }
-
+    /*
+    *----------------------------------------------------------------
+    * Game Logic Functions
+    *----------------------------------------------------------------
+    */
     fun observeScore(cardViewModel: CardViewModel) {
+        System.out.println("Observing Score");
         // Observe the Score
         val observer = Observer<List<Player>> {
             playerStatus.setText(it.get(it.size-1).toString())
@@ -143,6 +147,7 @@ class CardSelection : AppCompatActivity() {
     }
 
     fun drawCards(cardViewModel: CardViewModel){
+        System.out.println("Drawing cards");
         for ( i in 0 until 3) {
             val observer = Observer<List<Card>> { list ->
                 cards[i] = random.nextInt(list.size)
@@ -157,6 +162,13 @@ class CardSelection : AppCompatActivity() {
             }
             cardViewModel.getCardsByType(random.nextInt(4)+1).observe(this, observer)
         }
+    }
+
+    fun startResponseSelection(cardViewModel: CardViewModel, i : Int){
+        val myIntent = Intent(this, ChoiceScreen::class.java)
+        myIntent.putExtra("cardId", cardId[i])
+        startActivityForResult(myIntent, 1234)
+        delayedHide(0)
     }
 
 
