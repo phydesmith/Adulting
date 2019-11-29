@@ -95,7 +95,7 @@ class CardSelection : AppCompatActivity() {
             updateCatValues(it.get(0).education, 'E');
             updateCatValues(it.get(0).health, 'H');
             updateCatValues(it.get(0).wealth, 'W');
-            
+
         }
         cardViewModel.players.observe(this, observer)
 

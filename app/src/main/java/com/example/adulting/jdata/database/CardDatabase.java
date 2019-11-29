@@ -69,7 +69,7 @@ public abstract class CardDatabase extends RoomDatabase {
 
             Log.println(Log.DEBUG, "YEET/", " - Populate DB Async Task start");
 
-            playerDAO.insert(new Player(50, 50, 50, 50));
+            playerDAO.insert(new Player(25, 25, 25, 25));
 
             cardTypeDAO.insert(new CardType("Relationship"));
             cardTypeDAO.insert(new CardType("Education"));
@@ -162,7 +162,7 @@ public abstract class CardDatabase extends RoomDatabase {
             responseDAO.insert(new Response(21,"Cheap Coat",false,0,0,0,0,0,0,-15,10));
             responseDAO.insert(new Response(21,"Expensive Coat",false,0,0,0,0,0,0,15,-5));
             responseDAO.insert(new Response(21,"Buy a nice used winter coat",true,0,5,0,5,0,0,10,-2));
-            responseDAO.insert(new Response(22,"Buy memebership",false,0,0,0,0,0,0,15,-10));
+            responseDAO.insert(new Response(22,"Buy membership",false,0,0,0,0,0,0,15,-10));
             responseDAO.insert(new Response(22,"Don't buy one",false,0,0,0,0,0,0,-15,10));
             responseDAO.insert(new Response(22,"Use what you have around your house for weights and overtime buy your own weights as a long term investment",true,0,15,0,5,0,0,10,-5));
 
