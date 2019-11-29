@@ -1,5 +1,6 @@
 package com.example.adulting
 
+import android.annotation.TargetApi
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -83,11 +84,11 @@ class CardSelection : AppCompatActivity() {
         //  On click listeners for cards
         backCard.setOnClickListener(View.OnClickListener {
             //  Sends information to response activity
-            startResponseSelection(cardViewModel, 0);
+            startResponseSelection(cardViewModel, 0)
             // repopulate cards, needs delay so it does not change while user can see
             Handler().postDelayed({drawCards(cardViewModel);}, 1000)
             // update scores
-            observeScore(cardViewModel);
+            observeScore(cardViewModel)
         })
 
         /*
@@ -134,9 +135,10 @@ class CardSelection : AppCompatActivity() {
     * Game Logic Functions
     *----------------------------------------------------------------
     */
-    fun observeScore(cardViewModel: CardViewModel) {
+    fun observeScore(cardViewModel: CardViewModel) : Player {
         System.out.println("Observing Score");
         // Observe the Score
+        var player = Player(-1, 0, 0, 0, 0)
         val observer = Observer<List<Player>> {
             playerStatus.setText(it.get(it.size-1).toString())
             System.out.println("YEET TEST 2 " + it.get(it.size-1))
@@ -146,8 +148,11 @@ class CardSelection : AppCompatActivity() {
             updateCatValues(it.get(0).health, 'H');
             updateCatValues(it.get(0).wealth, 'W');
 
+            player = it.get(0);
+
         }
         cardViewModel.players.observe(this, observer)
+        return player
     }
 
     fun drawCards(cardViewModel: CardViewModel){
@@ -171,9 +176,36 @@ class CardSelection : AppCompatActivity() {
     fun startResponseSelection(cardViewModel: CardViewModel, i : Int){
         val myIntent = Intent(this, ChoiceScreen::class.java)
         myIntent.putExtra("cardId", cardId[i])
-        startActivityForResult(myIntent, 1234)
+        startActivity(myIntent)
         delayedHide(0)
     }
+
+    /*
+    fun checkWinLossConditions( it : Player ) {
+        System.out.println("Checking Win/Loss Conditions");
+        var gameOver = Intent(this, FinalScreen::class.java);
+        if (it.relationship <= 0 ||
+            it.education <= 0 ||
+            it.health <= 0 ||
+            it.wealth <= 0 ) {
+            gameOver.putExtra("win", false)
+            startActivity(intent)
+            finish()
+        } else if (
+            it.relationship > 55 ||
+            it.education > 55 ||
+            it.health > 55 ||
+            it.wealth > 55
+            ) {
+            gameOver.putExtra("win", true)
+            startActivity(intent)
+            finish()
+        } else {
+            return
+        }
+    }
+     */
+
 
     private fun updateCatValues(updateValue: Int, catToUpdate: Char) {
         lateinit var valueToUpdate : ImageView
@@ -208,7 +240,6 @@ class CardSelection : AppCompatActivity() {
     private fun dpToPx(dp: Int): Int {
         return (dp * (resources.displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT)).roundToInt()
     }
-
 
     /*
     *----------------------------------------------------------------
