@@ -68,6 +68,8 @@ class ChoiceScreen : AppCompatActivity() {
 
     // Game vars
     private lateinit var cardViewModel : CardViewModel
+    private lateinit var player : Player
+    val id = getIntent().getIntExtra("cardId", 0)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,7 +82,7 @@ class ChoiceScreen : AppCompatActivity() {
         //  Game Logic
 
         // put responses in correct places
-        val id = getIntent().getIntExtra("cardId", 0)
+        //val id = getIntent().getIntExtra("cardId", 0)
         cardViewModel = ViewModelProviders.of(this).get(CardViewModel::class.java) // from tutorial
         val observer = Observer<List<Card>> { list ->
             cardTitle.setText(list.get(0).cardName)
@@ -97,7 +99,7 @@ class ChoiceScreen : AppCompatActivity() {
         cardViewModel.getCardByInfoId(id).observe(this, observer)
 
         // player object
-        var player = Player(0,0,0,0)
+        player = Player(0,0,0,0)
         cardViewModel.players.observe(this, Observer {playerList ->
             System.out.println("YEET - listObj - b4 " + playerList.get(0).toString())
             System.out.println("YEET - playerObj - b4 " + player.toString())
@@ -109,7 +111,8 @@ class ChoiceScreen : AppCompatActivity() {
 
         //  On clicks
         choice1.setOnClickListener(View.OnClickListener {
-            System.out.println("YEET - clickListener 1 start")
+            updatePlayer(cardViewModel)
+            /*
             cardViewModel.getCardByInfoId(id).observe(this, Observer<List<Card>> {it ->
                 System.out.println("YEET - clickListener 1 obsv start")
                 cardViewModel.updatePlayer(Player(1,
@@ -119,7 +122,7 @@ class ChoiceScreen : AppCompatActivity() {
                     player.wealth + it.get(0).wealthMod))
                 System.out.println("YEET - clickListener 1 obsv End")
             })
-            System.out.println("YEET - clickListener 1 End")
+            */
             finish()
         })
 
@@ -150,7 +153,23 @@ class ChoiceScreen : AppCompatActivity() {
 
     }
 
-    // game func
+    /*
+    *----------------------------------------------------------------
+    * Game Logic Functions
+    *----------------------------------------------------------------
+    */
+
+    fun updatePlayer(cardViewModel: CardViewModel){
+        cardViewModel.getCardByInfoId(id).observe(this, Observer<List<Card>> {it ->
+            System.out.println("YEET - clickListener 1 obsv start")
+            cardViewModel.updatePlayer(Player(1,
+                player.relationship + it.get(0).relationshipMod,
+                player.education + it.get(0).educationMod,
+                player.health + it.get(0).healthMod,
+                player.wealth + it.get(0).wealthMod))
+            System.out.println("YEET - clickListener 1 obsv End")
+        })
+    }
 
 
 

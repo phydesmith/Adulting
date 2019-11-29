@@ -171,17 +171,6 @@ class CardSelection : AppCompatActivity() {
         delayedHide(0)
     }
 
-
-    override fun onPostCreate(savedInstanceState: Bundle?) {
-        super.onPostCreate(savedInstanceState)
-
-        // Trigger the initial hide() shortly after the activity has been
-        // created, to briefly hint to the user that UI controls
-        // are available.
-
-        delayedHide(0)
-    }
-
     private fun updateCatValues(updateValue: Int, catToUpdate: Char) {
         lateinit var valueToUpdate : ImageView
         when (catToUpdate) {
@@ -208,6 +197,30 @@ class CardSelection : AppCompatActivity() {
         valueToUpdate.requestLayout()
     }
 
+    private fun pxToDp(px: Int): Int {
+        return (px / (resources.displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT)).roundToInt()
+    }
+
+    private fun dpToPx(dp: Int): Int {
+        return (dp * (resources.displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT)).roundToInt()
+    }
+
+
+    /*
+    *----------------------------------------------------------------
+    * UI/Full Screen Functions
+    * Source:
+    *----------------------------------------------------------------
+    */
+    override fun onPostCreate(savedInstanceState: Bundle?) {
+        super.onPostCreate(savedInstanceState)
+
+        // Trigger the initial hide() shortly after the activity has been
+        // created, to briefly hint to the user that UI controls
+        // are available.
+
+        delayedHide(0)
+    }
 
     private fun hide() {
         // Hide UI first
@@ -247,13 +260,5 @@ class CardSelection : AppCompatActivity() {
          * and a change of the status and navigation bar.
          */
         private val UI_ANIMATION_DELAY = 300
-    }
-
-    private fun pxToDp(px: Int): Int {
-        return (px / (resources.displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT)).roundToInt()
-    }
-
-    private fun dpToPx(dp: Int): Int {
-        return (dp * (resources.displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT)).roundToInt()
     }
 }
