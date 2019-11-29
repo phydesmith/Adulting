@@ -69,21 +69,63 @@ class ChoiceScreen : AppCompatActivity() {
     // Game vars
     private lateinit var cardViewModel : CardViewModel
     private lateinit var player : Player
-    val id = getIntent().getIntExtra("cardId", 0)
+    private var id = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        /*
+        *----------------------------------------------------------------
+        * UI Setup
+        *----------------------------------------------------------------
+        */
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_choice_screen)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
         mVisible = true
 
-        //  Game Logic
 
+        /*
+        *----------------------------------------------------------------
+        * Game Logic
+        *----------------------------------------------------------------
+        */
         // put responses in correct places
-        //val id = getIntent().getIntExtra("cardId", 0)
+        id = getIntent().getIntExtra("cardId", 0)
         cardViewModel = ViewModelProviders.of(this).get(CardViewModel::class.java) // from tutorial
+
+        populateResponses()
+
+        // player object
+        player = Player(0,0,0,0)
+        cardViewModel.players.observe(this, Observer {playerList ->
+            System.out.println("YEET - listObj - b4 " + playerList.get(0).toString())
+            System.out.println("YEET - playerObj - b4 " + player.toString())
+            player = playerList.get(0);
+            System.out.println("YEET - playerObj - Aft " + player.toString())
+        })
+
+        //  On clicks
+        choice1.setOnClickListener(View.OnClickListener {
+            updatePlayer(0)
+            finish()
+        })
+
+        choice2.setOnClickListener(View.OnClickListener {
+            updatePlayer(1)
+            finish()
+        })
+        choice3.setOnClickListener(View.OnClickListener {
+            updatePlayer(2)
+            finish()
+        })
+
+    }
+
+    /*
+    *----------------------------------------------------------------
+    * Game Logic Functions
+    *----------------------------------------------------------------
+    */
+    fun populateResponses(){
         val observer = Observer<List<Card>> { list ->
             cardTitle.setText(list.get(0).cardName)
             for(i in 0 until list.size ) {
@@ -97,89 +139,18 @@ class ChoiceScreen : AppCompatActivity() {
             }
         }
         cardViewModel.getCardByInfoId(id).observe(this, observer)
-
-        // player object
-        player = Player(0,0,0,0)
-        cardViewModel.players.observe(this, Observer {playerList ->
-            System.out.println("YEET - listObj - b4 " + playerList.get(0).toString())
-            System.out.println("YEET - playerObj - b4 " + player.toString())
-            player = playerList.get(0);
-            System.out.println("YEET - playerObj - Aft " + player.toString())
-        })
-
-
-
-        //  On clicks
-        choice1.setOnClickListener(View.OnClickListener {
-            updatePlayer(cardViewModel)
-            /*
-            cardViewModel.getCardByInfoId(id).observe(this, Observer<List<Card>> {it ->
-                System.out.println("YEET - clickListener 1 obsv start")
-                cardViewModel.updatePlayer(Player(1,
-                    player.relationship + it.get(0).relationshipMod,
-                    player.education + it.get(0).educationMod,
-                    player.health + it.get(0).healthMod,
-                    player.wealth + it.get(0).wealthMod))
-                System.out.println("YEET - clickListener 1 obsv End")
-            })
-            */
-            finish()
-        })
-
-        /*
-        choice2.setOnClickListener(View.OnClickListener {
-            cardViewModel.getCardByInfoId(id).observe(this, Observer<List<Card>> {cardList ->
-                player.relationship += cardList.get(1).relationshipMod
-                player.education += cardList.get(1).educationMod
-                player.health += cardList.get(1).healthMod
-                player.wealth += cardList.get(1).wealthMod
-            })
-            cardViewModel.updatePlayer(player);
-            finish()
-        })
-        choice3.setOnClickListener(View.OnClickListener {
-            cardViewModel.getCardByInfoId(id).observe(this, Observer<List<Card>> {cardList ->
-                player.relationship += cardList.get(2).relationshipMod
-                player.education += cardList.get(2).educationMod
-                player.health += cardList.get(2).healthMod
-                player.wealth += cardList.get(2).wealthMod
-            })
-            cardViewModel.updatePlayer(player);
-            finish()
-        })
-        */
-
-
-
     }
 
-    /*
-    *----------------------------------------------------------------
-    * Game Logic Functions
-    *----------------------------------------------------------------
-    */
-
-    fun updatePlayer(cardViewModel: CardViewModel){
+    fun updatePlayer(choice : Int){
         cardViewModel.getCardByInfoId(id).observe(this, Observer<List<Card>> {it ->
             System.out.println("YEET - clickListener 1 obsv start")
             cardViewModel.updatePlayer(Player(1,
-                player.relationship + it.get(0).relationshipMod,
-                player.education + it.get(0).educationMod,
-                player.health + it.get(0).healthMod,
-                player.wealth + it.get(0).wealthMod))
+                player.relationship + it.get(choice).relationshipMod,
+                player.education + it.get(choice).educationMod,
+                player.health + it.get(choice).healthMod,
+                player.wealth + it.get(choice).wealthMod))
             System.out.println("YEET - clickListener 1 obsv End")
         })
-    }
-
-
-
-    override fun onPostCreate(savedInstanceState: Bundle?) {
-        super.onPostCreate(savedInstanceState)
-
-        // Trigger the initial hide() shortly after the activity has been
-        // created, to briefly hint to the user that UI controls
-        // are available.
-        delayedHide(0)
     }
 
     private fun updateCatValues(updateValue: Int, catToUpdate: Char) {
@@ -206,6 +177,29 @@ class ChoiceScreen : AppCompatActivity() {
         }
 
         valueToUpdate.requestLayout()
+    }
+
+    private fun pxToDp(px: Int): Int {
+        return (px / (resources.displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT)).roundToInt()
+    }
+
+    private fun dpToPx(dp: Int): Int {
+        return (dp * (resources.displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT)).roundToInt()
+    }
+
+    /*
+    *----------------------------------------------------------------
+    * UI Functions
+    *----------------------------------------------------------------
+    */
+
+    override fun onPostCreate(savedInstanceState: Bundle?) {
+        super.onPostCreate(savedInstanceState)
+
+        // Trigger the initial hide() shortly after the activity has been
+        // created, to briefly hint to the user that UI controls
+        // are available.
+        delayedHide(0)
     }
 
     private fun toggle() {
@@ -266,13 +260,5 @@ class ChoiceScreen : AppCompatActivity() {
          * and a change of the status and navigation bar.
          */
         private val UI_ANIMATION_DELAY = 300
-    }
-
-    private fun pxToDp(px: Int): Int {
-        return (px / (resources.displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT)).roundToInt()
-    }
-
-    private fun dpToPx(dp: Int): Int {
-        return (dp * (resources.displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT)).roundToInt()
     }
 }

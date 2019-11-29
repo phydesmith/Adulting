@@ -59,12 +59,16 @@ class CardSelection : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        /*
+        *----------------------------------------------------------------
+        * UI Setup
+        *----------------------------------------------------------------
+        */
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_card_selection)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
         mVisible = true
+
 
         /*
         *----------------------------------------------------------------
