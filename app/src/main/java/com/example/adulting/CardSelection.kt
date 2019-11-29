@@ -91,10 +91,13 @@ class CardSelection : AppCompatActivity() {
             playerStatus.setText(it.get(it.size-1).toString())
             System.out.println("YEET TEST 2 " + it.get(it.size-1))
 
+            updateCatValues(it.get(0).relationship, 'R');
+            updateCatValues(it.get(0).education, 'E');
+            updateCatValues(it.get(0).health, 'H');
+            updateCatValues(it.get(0).wealth, 'W');
+
         }
         cardViewModel.players.observe(this, observer)
-        //cardViewModel.insertPlayer(Player(1,2,3,4))
-
 
         //  Test Buttons for icon
         testAddR.setOnClickListener(View.OnClickListener {
@@ -164,7 +167,7 @@ class CardSelection : AppCompatActivity() {
             'W' -> valueToUpdate = valueWealth
         }
 
-        var oldHeight = pxToDp(valueToUpdate.layoutParams.height) + updateValue
+        var oldHeight = updateValue //pxToDp(valueToUpdate.layoutParams.height) + updateValue
 
         Log.i("Preston", "Math Starts Here: $oldHeight")
         when {
