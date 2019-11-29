@@ -54,6 +54,9 @@ class CardSelection : AppCompatActivity() {
 
     //  Game Vars
     private val random = java.util.Random()
+    private val cards = IntArray(3) {0}
+    private val cardId = IntArray(3) {0}
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,40 +67,10 @@ class CardSelection : AppCompatActivity() {
         mVisible = true
 
         // Game Logic
-        val cards = IntArray(3) {0}
-        val cardId = IntArray(3) {0}
-
         val cardViewModel = ViewModelProviders.of(this).get(CardViewModel::class.java) // from tutorial
-
-        //  Generate Card Titles
-        for ( i in 0 until 3) {
-            val observer = Observer<List<Card>> { list ->
-                cards[i] = random.nextInt(list.size)
-                if (i == 0) {
-                    backCardTitle.text = list.get(cards[i]).cardName
-                } else if (i == 1) {
-                    middleCardTitle.text = list.get(cards[i]).cardName
-                } else {
-                    frontCardTitle.text = list.get(cards[i]).cardName
-                }
-                cardId[i] = list.get(cards[i]).cardInfoId
-            }
-            cardViewModel.getCardsByType(random.nextInt(4)+1).observe(this, observer)
-        }
-
-
-        // Observe the Score
-        val observer = Observer<List<Player>> {
-            playerStatus.setText(it.get(it.size-1).toString())
-            System.out.println("YEET TEST 2 " + it.get(it.size-1))
-
-            updateCatValues(it.get(0).relationship, 'R');
-            updateCatValues(it.get(0).education, 'E');
-            updateCatValues(it.get(0).health, 'H');
-            updateCatValues(it.get(0).wealth, 'W');
-
-        }
-        cardViewModel.players.observe(this, observer)
+        
+        drawCards(cardViewModel);
+        observeScore(cardViewModel);
 
         //  Test Buttons for icon
         testAddR.setOnClickListener(View.OnClickListener {
@@ -116,7 +89,14 @@ class CardSelection : AppCompatActivity() {
             myIntent.putExtra("card", cards[0])
             startActivityForResult(myIntent, 1234)
             delayedHide(0)
-            recreate()
+
+            // redraw cards needs delay so it does not change while user can see
+            Handler().postDelayed({
+                drawCards(cardViewModel);
+            }, 1000)
+
+            // update scores
+            observeScore(cardViewModel);
         })
 
         /*
@@ -145,6 +125,38 @@ class CardSelection : AppCompatActivity() {
             types[i] = (random.nextInt(4)+1)
         }
         return types
+    }
+
+    fun observeScore(cardViewModel: CardViewModel) {
+        // Observe the Score
+        val observer = Observer<List<Player>> {
+            playerStatus.setText(it.get(it.size-1).toString())
+            System.out.println("YEET TEST 2 " + it.get(it.size-1))
+
+            updateCatValues(it.get(0).relationship, 'R');
+            updateCatValues(it.get(0).education, 'E');
+            updateCatValues(it.get(0).health, 'H');
+            updateCatValues(it.get(0).wealth, 'W');
+
+        }
+        cardViewModel.players.observe(this, observer)
+    }
+
+    fun drawCards(cardViewModel: CardViewModel){
+        for ( i in 0 until 3) {
+            val observer = Observer<List<Card>> { list ->
+                cards[i] = random.nextInt(list.size)
+                if (i == 0) {
+                    backCardTitle.text = list.get(cards[i]).cardName
+                } else if (i == 1) {
+                    middleCardTitle.text = list.get(cards[i]).cardName
+                } else {
+                    frontCardTitle.text = list.get(cards[i]).cardName
+                }
+                cardId[i] = list.get(cards[i]).cardInfoId
+            }
+            cardViewModel.getCardsByType(random.nextInt(4)+1).observe(this, observer)
+        }
     }
 
 
