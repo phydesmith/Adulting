@@ -135,7 +135,7 @@ class CardSelection : AppCompatActivity() {
     * Game Logic Functions
     *----------------------------------------------------------------
     */
-    fun observeScore(cardViewModel: CardViewModel) : Player {
+    fun observeScore(cardViewModel: CardViewModel) {
         System.out.println("Observing Score");
         // Observe the Score
         var player = Player(-1, 0, 0, 0, 0)
@@ -150,9 +150,19 @@ class CardSelection : AppCompatActivity() {
 
             player = it.get(0);
 
+            // starts win/loss if conditions met
+            if (player.relationship <= 0 ||
+                player.education <= 0 ||
+                player.health <= 0 ||
+                player.wealth <= 0 ) {
+                var gameOver = Intent(this, FinalScreen::class.java)
+                gameOver.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                gameOver.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(gameOver)
+            }
+
         }
         cardViewModel.players.observe(this, observer)
-        return player
     }
 
     fun drawCards(cardViewModel: CardViewModel){
