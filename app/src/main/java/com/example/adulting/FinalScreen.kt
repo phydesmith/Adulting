@@ -1,5 +1,6 @@
 package com.example.adulting
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -26,7 +27,8 @@ class FinalScreen : AppCompatActivity() {
         finalButton.setOnClickListener(View.OnClickListener {
             val cardViewModel = ViewModelProviders.of(this).get(CardViewModel::class.java) // from tutorial
             cardViewModel.updatePlayer(Player(1, 25, 25, 25, 25))
-            finish()
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
         })
     }
 }
