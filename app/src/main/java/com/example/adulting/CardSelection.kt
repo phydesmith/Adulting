@@ -91,28 +91,24 @@ class CardSelection : AppCompatActivity() {
             observeScore(cardViewModel)
         })
 
-        /*
         middleCard.setOnClickListener(View.OnClickListener {
             //  Sends information to response activity
-            startResponseSelection(cardViewModel, 1);
-
+            startResponseSelection(cardViewModel, 1)
             // repopulate cards, needs delay so it does not change while user can see
             Handler().postDelayed({drawCards(cardViewModel);}, 1000)
-
             // update scores
-            observeScore(cardViewModel);
+            observeScore(cardViewModel)
         })
+
         frontCard.setOnClickListener(View.OnClickListener {
             //  Sends information to response activity
-            startResponseSelection(cardViewModel, 2);
-
+            startResponseSelection(cardViewModel, 2)
             // repopulate cards, needs delay so it does not change while user can see
             Handler().postDelayed({drawCards(cardViewModel);}, 1000)
-
             // update scores
-            observeScore(cardViewModel);
+            observeScore(cardViewModel)
         })
-        */
+
 
         /*
         *----------------------------------------------------------------
@@ -151,11 +147,21 @@ class CardSelection : AppCompatActivity() {
             player = it.get(0);
 
             // starts win/loss if conditions met
+            var gameOver = Intent(this, FinalScreen::class.java)
             if (player.relationship <= 0 ||
                 player.education <= 0 ||
                 player.health <= 0 ||
                 player.wealth <= 0 ) {
-                var gameOver = Intent(this, FinalScreen::class.java)
+                System.out.println("Lose conditions met")
+                gameOver.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                gameOver.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(gameOver)
+            }
+            if (player.relationship > 55 ||
+                player.education > 55 ||
+                player.health > 55 ||
+                player.wealth > 55  ) {
+                System.out.println("Win conditions met")
                 gameOver.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 gameOver.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(gameOver)

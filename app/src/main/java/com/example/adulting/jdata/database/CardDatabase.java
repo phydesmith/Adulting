@@ -77,14 +77,14 @@ public abstract class CardDatabase extends RoomDatabase {
             cardTypeDAO.insert(new CardType("Health"));
             cardTypeDAO.insert(new CardType("Wealth"));
 
-            cardInfoDAO.insert(new CardInfo(1, "Dinner with Co-workers", "Your co-workers invited you to grab some dinner with them after closing."));
+            cardInfoDAO.insert(new CardInfo(1, "Co-worker Dinner", "Your co-workers invited you to grab some dinner with them after closing."));
             cardInfoDAO.insert(new CardInfo(1, "Valentines Day", "You and your spouse decided to not buy each other gifts."));
             cardInfoDAO.insert(new CardInfo(1, "Honeymoon", "You and your spouse have been recently married. You take a week to go to Cuba."));
-            cardInfoDAO.insert(new CardInfo(1, "Drinks After Work", "After a hard day of work your friends ask you to drink and play pool at the bar."));
+            cardInfoDAO.insert(new CardInfo(1, "Drinks?", "After a hard day of work your friends ask you to drink and play pool at the bar."));
             cardInfoDAO.insert(new CardInfo(1, "Friends or Girlfriend?", "Both your girlfriend and Friends ask you to hang out on a friday night."));
             cardInfoDAO.insert(new CardInfo(1, "Guy's Weekend", "Your friends invite you to go to Door County for the weekend."));
             cardInfoDAO.insert(new CardInfo(2, "Community Workshop", "You signed up to go to a class sponsored by a local community organization at 8:00 AM."));
-            cardInfoDAO.insert(new CardInfo(2, "AP?", "You are debating on whether or not you should take a difficult AP class during high school."));
+            cardInfoDAO.insert(new CardInfo(2, "AP Classes?", "You are debating on whether or not you should take a difficult AP class during high school."));
             cardInfoDAO.insert(new CardInfo(2, "Final Exam", "Your grade in economics is sustainable to skip the exam, but it will leave you with a low C, hurting your GPA."));
             cardInfoDAO.insert(new CardInfo(2, "Night Class", "You have a night class but you are feeling extremely weak and sick."));
             cardInfoDAO.insert(new CardInfo(2, "Which Class?", "You can sign up for a class you know will easy and you won't gain much knowledge from it, or you can also sign up for a harder class where you will end up learning more."));
@@ -112,9 +112,9 @@ public abstract class CardDatabase extends RoomDatabase {
             responseDAO.insert(new Response(4,"Get drinks after work, create and strengthen new friendships.",false,0,0,0,0,10,0,0,0));
             responseDAO.insert(new Response(4,"Stay at work and get ahead.",false,0,0,0,0,-5,5,0,0));
             responseDAO.insert(new Response(4,"You get so drunk and become best friends with the guys, along with buying shots for everyone all night long.",true,35,0,0,0,20,0,-5,-10));
-            responseDAO.insert(new Response(5,"Hang out with your girlfriend.",false,0,0,0,0,0,0,0,0));
-            responseDAO.insert(new Response(5,"Hang out with your friends.",false,0,0,0,0,0,0,0,0));
-            responseDAO.insert(new Response(5,"Hang out as a big group.",true,25,0,0,0,0,0,0,0));
+            responseDAO.insert(new Response(5,"Hang out with your girlfriend.",false,0,0,0,0,10,0,0,-5));
+            responseDAO.insert(new Response(5,"Hang out with your friends.",false,0,0,0,0,5,0,0,-10));
+            responseDAO.insert(new Response(5,"Hang out as a big group.",true,25,0,0,0,7,0,0,-3));
             responseDAO.insert(new Response(6,"Go and have a good time, but you end up spending money.",false,0,0,0,0,10,0,0,-10));
             responseDAO.insert(new Response(6,"Don't go and save money but miss out on a fun time.",false,0,0,0,0,-10,0,0,10));
             responseDAO.insert(new Response(6,"Go with, but really focus on budgeting yourself.",true,0,0,0,30,10,0,0,-5));
@@ -125,10 +125,10 @@ public abstract class CardDatabase extends RoomDatabase {
             responseDAO.insert(new Response(8,"Sign up for a single AP class.",false,0,0,0,0,0,10,-5,0));
             responseDAO.insert(new Response(8,"Take 2 AP classes per semester, allowing you to graduate with a competitive GPA, setting you up to attend a prestigious college.",true,0,20,0,0,0,20,-10,0));
             responseDAO.insert(new Response(9,"Take the exam like a normal student.",false,0,0,0,0,0,5,0,0));
-            responseDAO.insert(new Response(9,"skip and travel a few days earlier for spring break.",false,0,0,0,0,5,-5,0,0));
+            responseDAO.insert(new Response(9,"Skip and travel a few days earlier for spring break.",false,0,0,0,0,5,-5,0,0));
             responseDAO.insert(new Response(9,"Take the exam and get 100%, leaving you with an A in the class and putting you on honor roll.",true,0,25,0,0,0,20,0,0));
             responseDAO.insert(new Response(10,"Attend night class maintaining 100% attendance.",false,0,0,0,0,0,10,0,0));
-            responseDAO.insert(new Response(10,"skip class and see your S/O because she will only be free one day this week.",false,0,0,0,0,10,-10,0,0));
+            responseDAO.insert(new Response(10,"Skip class and see your S/O because she will only be free one day this week.",false,0,0,0,0,10,-10,0,0));
             responseDAO.insert(new Response(10,"Go out with S/O to a 5 star dinner.",true,0,0,0,30,5,-10,0,5));
             responseDAO.insert(new Response(11,"Easy class.",false,0,0,0,0,0,-10,5,0));
             responseDAO.insert(new Response(11,"Hard Class.",false,0,0,0,0,0,10,-5,0));
@@ -143,7 +143,7 @@ public abstract class CardDatabase extends RoomDatabase {
             responseDAO.insert(new Response(14,"Skip going to the dentist and risk whatever is happening in your mouth.",false,0,0,0,0,0,0,10,-5));
             responseDAO.insert(new Response(14,"Easily pay for the cavity as well as getting your teeth whitened, making you into a whole new person.",true,0,0,0,50,0,0,15,-5));
             responseDAO.insert(new Response(15,"Meet with your friend and work out as you have planned. ",false,0,0,0,0,0,0,10,0));
-            responseDAO.insert(new Response(15,"Bail on friend, sit at home and sleep instead.",false,0,0,0,0,-10,0,-5,0));
+            responseDAO.insert(new Response(15,"Bail on your friend, stay at home and sleep instead.",false,0,0,0,0,-10,0,-5,0));
             responseDAO.insert(new Response(15,"Work out with friend and introduce a new routine that is more efficient and effective than the one before.",true,0,20,0,0,5,5,15,0));
             responseDAO.insert(new Response(16,"McDonald's",false,0,0,0,0,0,0,-10,-5));
             responseDAO.insert(new Response(16,"Chick-Fil-A Salad",false,0,0,0,0,0,0,5,-10));
@@ -156,7 +156,7 @@ public abstract class CardDatabase extends RoomDatabase {
             responseDAO.insert(new Response(18,"Counterphish using your h4ck3r skills, you gain access to the scammer's bank account and drain his ill-gotten gains.",true,20,50,0,0,0,0,0,20));
             responseDAO.insert(new Response(19,"Save your money and buy a sandwich instead, you're really hungry.",false,0,0,0,0,0,0,3,-1));
             responseDAO.insert(new Response(19,"Play your lucky numbers and .....?",false,0,0,0,0,0,0,0,5));
-            responseDAO.insert(new Response(19,"you play random numbers and....",true,10,10,10,10,0,0,0,15));
+            responseDAO.insert(new Response(19,"You play random numbers and....",true,10,10,10,10,0,0,0,15));
             responseDAO.insert(new Response(20,"You think penny stocks are a scam and waste of time and money! You choose not to invest.",false,0,0,0,0,-5,0,0,-2));
             responseDAO.insert(new Response(20,"Since you are very helpful you choose to invest $500 into his penny stock.",false,0,0,0,0,3,2,0,7));
             responseDAO.insert(new Response(20,"You ask for more information and he convinces you to invest, you throw him $10,000, and it pays off.",true,0,0,0,45,10,0,0,15));
