@@ -88,10 +88,12 @@ class ChoiceScreen : AppCompatActivity() {
         * Game Logic
         *----------------------------------------------------------------
         */
+
         // put responses in correct places
         id = getIntent().getIntExtra("cardId", 0)
         cardViewModel = ViewModelProviders.of(this).get(CardViewModel::class.java) // from tutorial
 
+        observeScore(cardViewModel)
         populateResponses()
 
         // player object
@@ -153,6 +155,22 @@ class ChoiceScreen : AppCompatActivity() {
         })
     }
 
+    fun observeScore(cardViewModel: CardViewModel) {
+        System.out.println("Observing Score");
+        // Observe the Score
+        val observer = Observer<List<Player>> {
+            System.out.println("YEET Choice Screen score observer " + it.get(it.size-1))
+
+            updateCatValues(it.get(0).relationship, 'R');
+            updateCatValues(it.get(0).education, 'E');
+            updateCatValues(it.get(0).health, 'H');
+            updateCatValues(it.get(0).wealth, 'W');
+
+
+        }
+        cardViewModel.players.observe(this, observer)
+    }
+
     private fun updateCatValues(updateValue: Int, catToUpdate: Char) {
         lateinit var valueToUpdate : ImageView
         when (catToUpdate) {
@@ -162,7 +180,7 @@ class ChoiceScreen : AppCompatActivity() {
             'W' -> valueToUpdate = valueWealth
         }
 
-        var oldHeight = pxToDp(valueToUpdate.layoutParams.height) + updateValue
+        var oldHeight = updateValue //pxToDp(valueToUpdate.layoutParams.height) + updateValue
 
         Log.i("Preston", "Math Starts Here: $oldHeight")
         when {
