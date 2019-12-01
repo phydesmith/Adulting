@@ -178,14 +178,29 @@ class CardSelection : AppCompatActivity() {
                 cards[i] = random.nextInt(list.size)
                 if (i == 0) {
                     backCardTitle.text = list.get(cards[i]).cardName
+                    setIcon(backCardIcon, list.get(cards[i]).cardTypeId)
                 } else if (i == 1) {
                     middleCardTitle.text = list.get(cards[i]).cardName
+                    setIcon(middleCardIcon, list.get(cards[i]).cardTypeId)
                 } else {
                     frontCardTitle.text = list.get(cards[i]).cardName
+                    setIcon(frontCardIcon, list.get(cards[i]).cardTypeId)
                 }
                 cardId[i] = list.get(cards[i]).cardInfoId
             }
             cardViewModel.getCardsByType(random.nextInt(4)+1).observe(this, observer)
+        }
+    }
+
+    fun setIcon(imageView: ImageView, type : Int){
+        if (type == 1) {
+            imageView.setImageResource(R.drawable.icon_relationships)
+        } else if (type == 2){
+            imageView.setImageResource(R.drawable.icon_education)
+        } else if (type == 3) {
+            imageView.setImageResource(R.drawable.icon_health)
+        } else {
+            imageView.setImageResource(R.drawable.icon_wealth)
         }
     }
 
