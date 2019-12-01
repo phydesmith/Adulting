@@ -1,6 +1,7 @@
 package com.example.adulting
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.util.DisplayMetrics
@@ -154,6 +155,7 @@ class ChoiceScreen : AppCompatActivity() {
                     player.wealth < list.get(2).wealthCheck){
                 System.out.println("Should not be clickable")
                 choice3.isClickable = false
+                choice3.setTextColor(Color.GRAY)
             }
         }
         cardViewModel.getCardByInfoId(id).observe(this, observer)
