@@ -94,7 +94,7 @@ class ChoiceScreen : AppCompatActivity() {
         cardViewModel = ViewModelProviders.of(this).get(CardViewModel::class.java) // from tutorial
 
         observeScore(cardViewModel)
-        populateResponses()
+
 
         // player object
         player = Player(0,0,0,0)
@@ -103,7 +103,11 @@ class ChoiceScreen : AppCompatActivity() {
             System.out.println("YEET - playerObj - b4 " + player.toString())
             player = playerList.get(0);
             System.out.println("YEET - playerObj - Aft " + player.toString())
+
+            // this method is inside the observer to have relevant player object be readable
+            populateResponses(player)
         })
+
 
         //  On clicks
         choice1.setOnClickListener(View.OnClickListener {
@@ -127,7 +131,9 @@ class ChoiceScreen : AppCompatActivity() {
     * Game Logic Functions
     *----------------------------------------------------------------
     */
-    fun populateResponses(){
+    fun populateResponses(player : Player){
+        System.out.println("In populate response")
+        System.out.println("Player: " + player.toString());
         val observer = Observer<List<Card>> { list ->
             cardTitle.setText(list.get(0).cardName)
             for(i in 0 until list.size ) {
@@ -138,6 +144,16 @@ class ChoiceScreen : AppCompatActivity() {
                 } else {
                     choice3.setText(list.get(i).response)
                 }
+            }
+
+            System.out.println("Player: " + player.relationship + "|" + player.education + "|" + player.health + "|" + player.wealth)
+            System.out.println(  "Card: " + list.get(2).relationshipCheck + "|" + list.get(2).educationCheck + "|" + list.get(2).healthCheck + "|" + list.get(2).wealthCheck)
+            if (player.relationship < list.get(2).relationshipCheck ||
+                    player.education < list.get(2).educationCheck ||
+                    player.health < list.get(2).healthCheck ||
+                    player.wealth < list.get(2).wealthCheck){
+                System.out.println("Should not be clickable")
+                choice3.isClickable = false
             }
         }
         cardViewModel.getCardByInfoId(id).observe(this, observer)
@@ -161,14 +177,15 @@ class ChoiceScreen : AppCompatActivity() {
         val observer = Observer<List<Player>> {
             System.out.println("YEET Choice Screen score observer " + it.get(it.size-1))
 
+            // reflect scores in icons
             updateCatValues(it.get(0).relationship, 'R');
             updateCatValues(it.get(0).education, 'E');
             updateCatValues(it.get(0).health, 'H');
             updateCatValues(it.get(0).wealth, 'W');
 
-
         }
         cardViewModel.players.observe(this, observer)
+
     }
 
     private fun updateCatValues(updateValue: Int, catToUpdate: Char) {

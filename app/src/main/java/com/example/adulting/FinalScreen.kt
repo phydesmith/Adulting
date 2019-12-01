@@ -50,6 +50,7 @@ class FinalScreen : AppCompatActivity() {
                 finalResults.setText("You lose.")
 
             }
+
             if (player.relationship > 55 ||
                 player.education > 55 ||
                 player.health > 55 ||
