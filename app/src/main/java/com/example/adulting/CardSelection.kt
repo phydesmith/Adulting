@@ -211,33 +211,6 @@ class CardSelection : AppCompatActivity() {
         delayedHide(0)
     }
 
-    /*
-    fun checkWinLossConditions( it : Player ) {
-        System.out.println("Checking Win/Loss Conditions");
-        var gameOver = Intent(this, FinalScreen::class.java);
-        if (it.relationship <= 0 ||
-            it.education <= 0 ||
-            it.health <= 0 ||
-            it.wealth <= 0 ) {
-            gameOver.putExtra("win", false)
-            startActivity(intent)
-            finish()
-        } else if (
-            it.relationship > 55 ||
-            it.education > 55 ||
-            it.health > 55 ||
-            it.wealth > 55
-            ) {
-            gameOver.putExtra("win", true)
-            startActivity(intent)
-            finish()
-        } else {
-            return
-        }
-    }
-     */
-
-
     private fun updateCatValues(updateValue: Int, catToUpdate: Char) {
         lateinit var valueToUpdate : ImageView
         when (catToUpdate) {
