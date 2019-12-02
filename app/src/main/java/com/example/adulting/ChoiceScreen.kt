@@ -137,6 +137,7 @@ class ChoiceScreen : AppCompatActivity() {
         System.out.println("Player: " + player.toString());
         val observer = Observer<List<Card>> { list ->
             cardTitle.setText(list.get(0).cardName)
+            cardDescription.setText(list.get(0).cardDescription)
             for(i in 0 until list.size ) {
                 if (i == 0) {
                     choice1.setText(list.get(i).response)
