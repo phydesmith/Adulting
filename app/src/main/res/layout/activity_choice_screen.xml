@@ -131,7 +131,7 @@
         android:id="@+id/choice1"
         android:layout_width="325dp"
         android:layout_height="125dp"
-        android:layout_marginTop="125dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/back_rectangle"
         android:clickable="true"
         android:padding="4dp"
@@ -139,29 +139,15 @@
         android:textColor="#000000"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.604"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/choice2"
-        android:layout_width="325dp"
-        android:layout_height="125dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/back_rectangle"
-        android:clickable="true"
-        android:padding="4dp"
-        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-        android:textColor="#000000"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/choice1" />
+        app:layout_constraintTop_toBottomOf="@+id/cardDescription" />
 
     <TextView
         android:id="@+id/choice3"
         android:layout_width="325dp"
         android:layout_height="125dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/back_rectangle"
         android:clickable="true"
         android:padding="4dp"
@@ -169,8 +155,37 @@
         android:textColor="#000000"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.604"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/choice2" />
+
+    <TextView
+        android:id="@+id/choice2"
+        android:layout_width="325dp"
+        android:layout_height="125dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/back_rectangle"
+        android:clickable="true"
+        android:padding="4dp"
+        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+        android:textColor="#000000"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.604"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/choice1" />
+
+    <TextView
+        android:id="@+id/cardDescription"
+        android:layout_width="359dp"
+        android:layout_height="107dp"
+        android:layout_marginTop="32dp"
+        android:text="TextView"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardTitle" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
