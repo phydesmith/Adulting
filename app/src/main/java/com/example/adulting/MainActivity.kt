@@ -31,4 +31,12 @@ class MainActivity : AppCompatActivity() {
         val myIntent = Intent(this, CardSelection::class.java)
         startActivityForResult(myIntent, IS_DEAD)
     }
-}
+
+    // instructions
+    fun startInstructions (view: View) {
+        val intent = Intent(this, InstructionActivity::class.java)
+        startActivity(intent)
+    }
+
+
+    }
