@@ -15,7 +15,7 @@
         android:scaleType="centerInside"
         android:src="@drawable/card"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="-26dp" />
+        tools:layout_editor_absoluteY="-70dp" />
 
     <Button
         android:id="@+id/startButton"
@@ -29,6 +29,16 @@
         android:text="Time to grow up!"
         android:onClick="startGame"
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/instructionsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="startInstructions"
+        android:text="Instructions!"
+        app:layout_constraintBottom_toTopOf="@+id/startButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
